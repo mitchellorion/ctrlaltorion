@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ctrl + Alt + Orion — Own Your Website</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <style>
+            @font-face {
+                font-family: "GenoBold";
+                src: url("fonts/GenoBold.woff2") format("woff2"),
+                     url("fonts/GenoBold.woff") format("woff");
+                font-weight: 700;
+                font-display: swap;
+            }
+
+            *, *::before, *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            :root {
+                --bg: #08080f;
+                --bg2: #0d0c18;
+                --bg3: #100f1e;
+                --fg: #f5f0ff;
+                --fg2: #c8c0e8;
+                --muted: #706888;
+                --muted2: #3e3855;
+                --pink: #ff2d87;
+                --orange: #ff6b35;
+                --grad: linear-gradient(135deg, #ff2d87, #ff6b35);
+                --grad-hover: linear-gradient(135deg, #ff4d9a, #ff8050);
+                --grad-border: linear-gradient(135deg, rgba(255,45,135,0.5), rgba(255,107,53,0.5));
+                --grad-dim: linear-gradient(135deg, rgba(255,45,135,0.12), rgba(255,107,53,0.08));
+                --border: rgba(255, 255, 255, 0.07);
+                --border2: rgba(255, 255, 255, 0.11);
+                --surface: rgba(255, 255, 255, 0.04);
+                --green: #a3ffb0;
+                --radius: 16px;
+                --radius-sm: 12px;
+            }
+
+            html { scroll-behavior: smooth; }
+
+            body {
+                font-family: "Inter", system-ui, sans-serif;
+                background: var(--bg);
+                color: var(--fg);
+                line-height: 1.6;
+                -webkit-font-smoothing: antialiased;
+                overflow-x: hidden;
+            }
+
+            .container {
+                max-width: 1160px;
+                margin: 0 auto;
+                padding: 0 1.5rem;
+                position: relative;
+                z-index: 1;
+            }
+
+            /* ── Nav ── */
+            nav {
+                position: fixed;
+                inset: 0 0 auto 0;
+                z-index: 1000;
+                background: rgba(8, 8, 15, 0.88);
+                backdrop-filter: saturate(180%) blur(24px);
+                border-bottom: 1px solid var(--border2);
+            }
+            nav .container {
+                display: flex; align-items: center; justify-content: space-between;
+                height: 68px;
+            }
+            .logo {
+                font-family: "GenoBold", "Inter", sans-serif;
+                font-size: 1.15rem; font-weight: 700; color: var(--fg);
+                text-decoration: none; display: flex; align-items: center; gap: 0.5rem;
+            }
+            .logo-icon {
+                width: 34px; height: 34px; border-radius: 10px;
+                background: var(--grad);
+                display: flex; align-items: center; justify-content: center;
+                font-size: 0.8rem; font-weight: 900; color: #fff; flex-shrink: 0;
+            }
+            .logo .accent-text {
+                background: var(--grad);
+                -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .nav-links { display: flex; gap: 2rem; align-items: center; }
+            .nav-links a {
+                font-size: 0.875rem; font-weight: 500;
+                color: var(--muted); text-decoration: none; transition: color 0.2s;
+            }
+            .nav-links a:hover { color: var(--fg); }
+
+            /* ── Buttons ── */
+            .btn {
+                display: inline-flex; align-items: center; justify-content: center;
+                gap: 0.5rem; font-size: 0.9rem; font-weight: 700;
+                padding: 0.75rem 1.5rem; border-radius: var(--radius-sm);
+                text-decoration: none; transition: all 0.25s; border: none;
+                cursor: pointer; font-family: inherit;
+            }
+            .btn-primary {
+                background: var(--grad);
+                color: #ffffff;
+                box-shadow: 0 4px 20px rgba(255, 45, 135, 0.3);
+            }
+            .btn-primary:hover {
+                background: var(--grad-hover);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 30px rgba(255, 45, 135, 0.45);
+            }
+            .btn-ghost {
+                background: var(--surface);
+                color: var(--fg2);
+                border: 1px solid var(--border2);
+            }
+            .btn-ghost:hover {
+                border-color: rgba(255,45,135,0.4);
+                color: var(--pink);
+            }
+            .btn-lg { padding: 0.9rem 1.75rem; font-size: 0.95rem; }
+
+            /* ── Badge ── */
+            .badge {
+                display: inline-flex; align-items: center; gap: 0.5rem;
+                font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+                background: var(--grad-dim); border: 1px solid rgba(255,45,135,0.25);
+                padding: 0.35rem 0.85rem; border-radius: 100px; margin-bottom: 1.5rem;
+            }
+            .badge .badge-dot {
+                width: 6px; height: 6px; border-radius: 50%;
+                background: var(--grad); flex-shrink: 0;
+                box-shadow: 0 0 8px rgba(255,45,135,0.8);
+                animation: pulse 2s ease-in-out infinite;
+            }
+            .badge span {
+                background: var(--grad);
+                -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+            /* ── Hero ── */
+            .hero {
+                padding: 0;
+                position: relative;
+                overflow: hidden;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+            }
+            .hero-bg {
+                position: absolute; inset: 0;
+                background-image: url("assets/backgrounds/liquid5.png");
+                background-size: cover; background-position: center;
+                z-index: 0;
+            }
+            .hero-bg::after {
+                content: "";
+                position: absolute; inset: 0;
+                background: rgba(10, 10, 20, 0.8);
+            }
+            .hero-grid {
+                display: grid; grid-template-columns: 1.2fr 0.8fr;
+                gap: 4rem; align-items: center;
+                padding: 10rem 0 7rem;
+            }
+            .hero h1 {
+                font-family: "GenoBold", "Inter", sans-serif;
+                font-size: clamp(3rem, 5.5vw, 5rem);
+                font-weight: 700; line-height: 1.0; margin-bottom: 1.5rem;
+            }
+            .hero h1 .highlight {
+                background: var(--grad);
+                -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+                background-clip: text; display: block;
+                filter: drop-shadow(0 0 30px rgba(255,45,135,0.3));
+            }
+            .hero p {
+                font-size: 1.1rem; color: var(--fg2);
+                max-width: 500px; margin-bottom: 2.25rem; line-height: 1.7;
+            }
+            .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+            .hero-visual { position: relative; display: flex; align-items: center; justify-content: center; }
+            .hero-card {
+                background: rgba(13, 12, 24, 0.85);
+                border: 1px solid var(--border2);
+                border-radius: 20px; padding: 1.75rem; width: 100%; max-width: 300px;
+                backdrop-filter: blur(20px);
+                box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,45,135,0.1);
+                position: relative;
+            }
+            .hero-card::before {
+                content: "";
+                position: absolute; top: 0; left: 0; right: 0;
+                height: 1px;
+                background: linear-gradient(90deg, transparent, var(--pink), var(--orange), transparent);
+            }
+            .hero-card-title {
+                font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+                color: var(--muted2); margin-bottom: 1.25rem;
+                display: flex; align-items: center; gap: 0.5rem;
+            }
+            .hero-card-title::before {
+                content: ""; width: 6px; height: 6px; border-radius: 50%;
+                background: var(--green); box-shadow: 0 0 8px var(--green);
+            }
+            .hero-card .row {
+                display: flex; align-items: center; justify-content: space-between;
+                padding: 0.7rem 0; border-bottom: 1px solid var(--border);
+            }
+            .hero-card .row:last-child { border-bottom: none; }
+            .hero-card .label { font-size: 0.8rem; color: var(--muted); }
+            .hero-card .value {
+                font-size: 0.875rem; font-weight: 800;
+                background: var(--grad); -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent; background-clip: text;
+            }
+
+            /* ── Section ── */
+            section { padding: 6rem 0; }
+            .section-header { max-width: 640px; margin: 0 auto 3.5rem; text-align: center; }
+            .section-header h2 {
+                font-family: "GenoBold", "Inter", sans-serif;
+                font-size: clamp(1.9rem, 3.5vw, 2.75rem);
+                font-weight: 700; line-height: 1.15; margin-bottom: 0.85rem;
+            }
+            .section-header p { font-size: 1.05rem; color: var(--muted); line-height: 1.7; }
+
+            /* Liquid strip dividers */
+            .liquid-strip {
+                height: 100px;
+                background-image: url("assets/backgrounds/liquid5.png");
+                background-size: cover;
+                background-position: center;
+                position: relative;
+                overflow: hidden;
+            }
+            .liquid-strip::before {
+                content: "";
+                position: absolute; inset: 0;
+                background: rgba(8,8,15,0.7);
+            }
+
+            /* ── Comparison ── */
+            #difference { background: var(--bg2); }
+            .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+            .compare-card {
+                border-radius: var(--radius); padding: 2rem;
+                border: 1px solid var(--border); background: var(--surface);
+            }
+            .compare-card h3 {
+                font-family: "GenoBold", "Inter", sans-serif;
+                font-size: 0.9rem; font-weight: 700; margin-bottom: 1.5rem;
+                display: flex; align-items: center; gap: 0.6rem; color: var(--muted);
+            }
+            .compare-card ul { list-style: none; }
+            .compare-card li {
+                display: flex; align-items: flex-start; gap: 0.75rem;
+                padding: 0.65rem 0; font-size: 0.9rem; color: var(--muted);
+                border-bottom: 1px solid var(--border);
+            }
+            .compare-card li:last-child { border-bottom: none; }
+            .compare-card .icon { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; }
+            .compare-card.them .icon { color: var(--muted2); }
+            .compare-card.us {
+                background: linear-gradient(145deg, rgba(255,45,135,0.1), rgba(255,107,53,0.06));
+                border-color: rgba(255,45,135,0.25);
+                position: relative; overflow: hidden;
+            }
+            .compare-card.us::before {
+                content: "";
+                position: absolute; top: 0; left: 0; right: 0;
+                height: 1px;
+                background: linear-gradient(90deg, transparent, var(--pink), var(--orange), transparent);
+            }
+            .compare-card.us h3 { color: var(--fg); }
+            .compare-card.us li { color: rgba(245,240,255,0.75); border-color: rgba(255,255,255,0.06); }
+            .compare-card.us .icon { color: var(--pink); }
+
+            /* ── Features ── */
+            .features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+            .feature {
+                border: 1px solid var(--border); border-radius: var(--radius);
+                padding: 1.75rem 1.5rem; background: var(--surface);
+                transition: all 0.3s; position: relative; overflow: hidden;
+            }
+            .feature:hover {
+                border-color: transparent; transform: translateY(-3px);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            }
+            .feature:hover::after {
+                content: "";
+                position: absolute; inset: -1px;
+                border-radius: calc(var(--radius) + 1px);
+                background: linear-gradient(135deg, rgba(255,45,135,0.5), rgba(255,107,53,0.4));
+                z-index: -1;
+            }
+            .feature-icon {
+                width: 40px; height: 40px; border-radius: 10px;
+                background: linear-gradient(135deg, rgba(255,45,135,0.15), rgba(255,107,53,0.1));
+                border: 1px solid rgba(255,45,135,0.2);
+                display: flex; align-items: center; justify-content: center;
+                margin-bottom: 1.1rem; color: var(--pink);
+            }
+            .feature-icon svg { width: 20px; height: 20px; }
+            .feature h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+            .feature p { font-size: 0.875rem; color: var(--muted); line-height: 1.55; }
+
+            /* ── Stats bar ── */
+            .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 5rem; }
+            .stat-item {
+                background: var(--surface); border: 1px solid var(--border);
+                border-radius: var(--radius); padding: 2rem 1.5rem; text-align: center;
+                position: relative; overflow: hidden;
+            }
+            .stat-item::before {
+                content: "";
+                position: absolute; bottom: 0; left: 0; right: 0;
+                height: 2px; background: var(--grad);
+            }
+            .stat-item strong {
+                display: block; font-size: 2.25rem; font-weight: 900;
+                letter-spacing: -0.04em;
+                background: var(--grad); -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent; background-clip: text;
+                line-height: 1; margin-bottom: 0.4rem;
+            }
+            .stat-item span { font-size: 0.875rem; color: var(--muted); font-weight: 500; }
+
+            /* ── Work ── */
+            #work { background: var(--bg2); }
+            .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 2rem; }
+            .work-card {
+                border-radius: var(--radius); border: 1px solid var(--border);
+                background: var(--surface); overflow: hidden; transition: all 0.3s;
+            }
+            .work-card:hover { transform: translateY(-3px); border-color: rgba(255,45,135,0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 20px rgba(255,45,135,0.1); }
+            .work-card-inner { padding: 2rem 1.75rem; display: flex; flex-direction: column; gap: 0.6rem; height: 100%; }
+            .work-logo-placeholder {
+                width: 52px; height: 52px; border-radius: 12px;
+                background: linear-gradient(135deg, rgba(255,45,135,0.1), rgba(255,107,53,0.08));
+                border: 1px solid rgba(255,45,135,0.2);
+                display: flex; align-items: center; justify-content: center;
+                color: var(--pink); margin-bottom: 0.5rem;
+            }
+            .work-card h3 { font-size: 1rem; font-weight: 700; color: var(--fg2); }
+            .work-card p { font-size: 0.875rem; color: var(--muted2); line-height: 1.55; flex: 1; }
+            .work-tag {
+                display: inline-flex; align-items: center;
+                font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+                background: var(--grad); color: #fff;
+                padding: 0.25rem 0.65rem; border-radius: 100px; margin-top: 0.5rem; width: fit-content;
+            }
+            .work-note { text-align: center; font-size: 0.9rem; color: var(--muted); }
+            .work-note a {
+                background: var(--grad); -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent; background-clip: text;
+                text-decoration: none; font-weight: 700;
+            }
+            .work-note a:hover { text-decoration: underline; }
+
+            /* ── Contact ── */
+            #contact { position: relative; overflow: hidden; }
+            .cta-header { text-align: center; margin-bottom: 3rem; }
+            .cta-header h2 {
+                font-family: "GenoBold", "Inter", sans-serif;
+                font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700;
+                line-height: 1.1; margin-bottom: 0.75rem;
+            }
+            .cta-header p { font-size: 1.05rem; color: var(--muted); }
+
+            .form-card {
+                max-width: 700px; margin: 0 auto;
+                background: rgba(13, 12, 24, 0.8);
+                border: 1px solid var(--border2); border-radius: 20px;
+                padding: 2.5rem; backdrop-filter: blur(20px);
+                box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+                position: relative; overflow: hidden;
+            }
+            .form-card::before {
+                content: "";
+                position: absolute; top: 0; left: 0; right: 0;
+                height: 2px;
+                background: var(--grad);
+            }
+            .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+            .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+            .form-field.full { grid-column: 1 / -1; }
+            .form-field label { font-size: 0.8rem; font-weight: 600; color: var(--muted); letter-spacing: 0.02em; }
+            .form-field input, .form-field textarea {
+                font-family: inherit; font-size: 0.9rem; padding: 0.8rem 1rem;
+                border-radius: var(--radius-sm); border: 1px solid var(--border);
+                background: rgba(255,255,255,0.04); color: var(--fg); outline: none;
+                transition: border-color 0.2s, box-shadow 0.2s;
+            }
+            .form-field input::placeholder, .form-field textarea::placeholder { color: var(--muted2); }
+            .form-field input:focus, .form-field textarea:focus {
+                border-color: rgba(255,45,135,0.5);
+                box-shadow: 0 0 0 3px rgba(255,45,135,0.1);
+            }
+            .form-field textarea { resize: vertical; min-height: 120px; }
+            .form-card .btn-primary { width: 100%; margin-top: 0.75rem; padding: 1rem; font-size: 0.95rem; }
+
+            /* ── Divider ── */
+            .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,45,135,0.25), transparent); }
+
+            /* ── Footer ── */
+            footer { padding: 3.5rem 0 2.5rem; position: relative; z-index: 1; border-top: 1px solid var(--border); }
+            .footer-inner { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; }
+            .footer-inner .logo { margin-bottom: 0.5rem; }
+            .footer-tagline { font-size: 0.9rem; color: var(--muted); }
+            .footer-location {
+                font-size: 0.875rem; font-weight: 600; margin-bottom: 1.25rem;
+                background: var(--grad); -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent; background-clip: text;
+            }
+            .footer-copy { font-size: 0.8rem; color: var(--muted2); }
+
+            /* ── Responsive ── */
+            @media (max-width: 980px) {
+                .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+                .hero-visual { order: -1; }
+                .hero-card { max-width: 280px; }
+                .features { grid-template-columns: repeat(2, 1fr); }
+                .stats-bar { grid-template-columns: 1fr; }
+                .work-grid { grid-template-columns: 1fr; }
+            }
+            @media (max-width: 640px) {
+                .comparison { grid-template-columns: 1fr; }
+                .features { grid-template-columns: 1fr; }
+                .form-grid { grid-template-columns: 1fr; }
+                .form-field.full { grid-column: 1; }
+                .nav-links { display: none; }
+                .form-card { padding: 1.5rem; }
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <div class="container">
+                <a href="#" class="logo">
+                    <div class="logo-icon">C</div>
+                    Ctrl+Alt+<span class="accent-text">Orion</span>
+                </a>
+                <div class="nav-links">
+                    <a href="#difference">Difference</a>
+                    <a href="#services">Services</a>
+                    <a href="#contact" class="btn btn-primary">Get a Quote</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-bg" aria-hidden="true"></div>
+            <div class="container hero-grid">
+                <div>
+                    <div class="badge"><div class="badge-dot"></div><span>Portland Web Studio</span></div>
+                    <h1>Break free from<br><span class="highlight">platform lock&#8209;in.</span></h1>
+                    <p>
+                        Stop renting your business website. We build custom
+                        sites and apps you actually own — with full control,
+                        lower fees, and room to grow on your terms.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#contact" class="btn btn-primary btn-lg">Start Your Project</a>
+                        <a href="#services" class="btn btn-ghost btn-lg">Explore Services</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-card">
+                        <div class="hero-card-title">Your Website Status</div>
+                        <div class="row"><span class="label">Ownership</span><span class="value">100%</span></div>
+                        <div class="row"><span class="label">Platform fees</span><span class="value">Gone</span></div>
+                        <div class="row"><span class="label">Customization</span><span class="value">Unlimited</span></div>
+                        <div class="row"><span class="label">Portability</span><span class="value">Full</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="liquid-strip" aria-hidden="true"></div>
+
+        <!-- Difference -->
+        <section id="difference">
+            <div class="container">
+                <div class="section-header">
+                    <div class="badge"><div class="badge-dot"></div><span>The Difference</span></div>
+                    <h2>Ownership changes everything</h2>
+                    <p>Template builders charge forever and limit what you can do. We build it once — and it's yours.</p>
+                </div>
+                <div class="comparison">
+                    <div class="compare-card them">
+                        <h3>
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+                            Shopify / Squarespace
+                        </h3>
+                        <ul>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>Monthly fees that never end</li>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>Limited customization</li>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>High processing fees</li>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>Locked into their ecosystem</li>
+                        </ul>
+                    </div>
+                    <div class="compare-card us">
+                        <h3>
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 7L9 18l-5-5"/></svg>
+                            Ctrl + Alt + Orion
+                        </h3>
+                        <ul>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 7L9 18l-5-5"/></svg>You own your website forever</li>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 7L9 18l-5-5"/></svg>Fully customized to your brand</li>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 7L9 18l-5-5"/></svg>Competitive processing fees</li>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 7L9 18l-5-5"/></svg>Complete control &amp; portability</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="liquid-strip" aria-hidden="true"></div>
+
+        <!-- Services -->
+        <section id="services">
+            <div class="container">
+                <div class="section-header">
+                    <div class="badge"><div class="badge-dot"></div><span>Services</span></div>
+                    <h2>Built for your business</h2>
+                    <p>Everything you need to run, sell, and scale — without the platform tax.</p>
+                </div>
+                <div class="stats-bar">
+                    <div class="stat-item"><strong>100%</strong><span>You own your site</span></div>
+                    <div class="stat-item"><strong>~$10</strong><span>Typical monthly hosting cost</span></div>
+                    <div class="stat-item"><strong>∞</strong><span>Customization potential</span></div>
+                </div>
+                <div class="features">
+                    <div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><h3>Total Customization</h3><p>No templates. No limits. Built exactly for your workflow.</p></div>
+                    <div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div><h3>Lower Processing Fees</h3><p>Keep more revenue with better payment rates.</p></div>
+                    <div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><h3>Employee Scheduling</h3><p>Custom scheduling apps that fit your team.</p></div>
+                    <div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg></div><h3>Toast &amp; DoorDash APIs</h3><p>Ordering and delivery integrations baked right in.</p></div>
+                    <div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div><h3>Shipping APIs</h3><p>Real-time rates, labels, and tracking integrated.</p></div>
+                    <div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></div><h3>Custom Domain Email</h3><p>Professional campaigns sent from your domain.</p></div>
+                    <div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><h3>Infinite Scalability</h3><p>Grows with you from ten customers to ten thousand.</p></div>
+                    <div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><h3>Budget-Friendly</h3><p>Custom solutions priced for small businesses.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="liquid-strip" aria-hidden="true"></div>
+
+        <!-- Work -->
+        <section id="work">
+            <div class="container">
+                <div class="section-header">
+                    <div class="badge"><div class="badge-dot"></div><span>Our Work</span></div>
+                    <h2>Businesses we've built for</h2>
+                    <p>Real sites, real owners, real control. Each one custom-built and fully owned by the client.</p>
+                </div>
+                <div class="work-grid">
+                    <div class="work-card"><div class="work-card-inner"><div class="work-logo-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></div><h3>Your Business Here</h3><p>A custom site built to your brand, workflow, and goals — no templates, no compromises.</p><span class="work-tag">Coming Soon</span></div></div>
+                    <div class="work-card"><div class="work-card-inner"><div class="work-logo-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div><h3>Your Business Here</h3><p>E-commerce, scheduling, ordering integrations — whatever your operation needs built in.</p><span class="work-tag">Coming Soon</span></div></div>
+                    <div class="work-card"><div class="work-card-inner"><div class="work-logo-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><h3>Your Business Here</h3><p>From solo operators to full teams — scalable from day one, owned by you forever.</p><span class="work-tag">Coming Soon</span></div></div>
+                </div>
+                <p class="work-note">Want to be the first? <a href="#contact">Let's talk.</a></p>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Contact -->
+        <section id="contact">
+            <div class="container">
+                <div class="cta-header">
+                    <div class="badge"><div class="badge-dot"></div><span>Get Started</span></div>
+                    <h2>Ready to take control?</h2>
+                    <p>Let's build something sharp, fast, and fully yours.</p>
+                </div>
+                <form class="form-card" action="https://formsubmit.co/hello@ctrlaltorion.com" method="POST">
+                    <div class="form-grid">
+                        <div class="form-field"><label for="name">Name</label><input type="text" id="name" name="name" placeholder="Your name" required /></div>
+                        <div class="form-field"><label for="business">Business Name</label><input type="text" id="business" name="business" placeholder="Your business" required /></div>
+                        <div class="form-field"><label for="phone">Telephone</label><input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" required /></div>
+                        <div class="form-field"><label for="email">Email Address</label><input type="email" id="email" name="email" placeholder="you@example.com" required /></div>
+                        <div class="form-field full"><label for="message">What are you looking for?</label><textarea id="message" name="message" placeholder="Tell us a bit about your project..." required></textarea></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Quote Request</button>
+                    <input type="hidden" name="_subject" value="New quote request from Ctrl + Alt + Orion" />
+                    <input type="hidden" name="_captcha" value="false" />
+                    <input type="hidden" name="_next" value="https://ctrlaltorion.com" />
+                </form>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <footer>
+            <div class="container">
+                <div class="footer-inner">
+                    <a href="#" class="logo"><div class="logo-icon">C</div>Ctrl+Alt+<span class="accent-text">Orion</span></a>
+                    <p class="footer-tagline">Freeing small businesses from platform dependency.</p>
+                    <p class="footer-location">Portland, Oregon — Locally Owned &amp; Operated</p>
+                    <p class="footer-copy">&copy; 2026 Ctrl + Alt + Orion. You own your business — own your website too.</p>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

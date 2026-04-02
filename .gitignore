@@ -1,0 +1,12 @@
+# Exclude large unused background files
+assets/backgrounds/blur1.jpg
+assets/backgrounds/blur2.jpg
+assets/backgrounds/blur6.jpg
+assets/backgrounds/holo1.jpg
+assets/backgrounds/holo3.jpg
+assets/backgrounds/liquid1.png
+assets/backgrounds/liquid5.png
+assets/backgrounds/liquid8.png
+
+# Exclude gallery (not used in site)
+gallery/

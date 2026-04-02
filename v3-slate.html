@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ctrl + Alt + Orion — Own Your Website</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <style>
+            @font-face {
+                font-family: "GaldernBlack";
+                src: url("fonts/Galdern-Black.woff2") format("woff2"),
+                     url("fonts/Galdern-Black.woff") format("woff");
+                font-weight: 900;
+                font-display: swap;
+            }
+            @font-face {
+                font-family: "Commune";
+                src: url("fonts/commune.woff2") format("woff2"),
+                     url("fonts/commune.woff") format("woff");
+                font-weight: 400;
+                font-display: swap;
+            }
+
+            *, *::before, *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            :root {
+                --bg: #0e0c0b;
+                --bg2: #131110;
+                --bg3: #171513;
+                --fg: #f5f0e8;
+                --fg2: #d8cfc0;
+                --muted: #7a6e5e;
+                --muted2: #4a4038;
+                --accent: #d4952a;
+                --accent-light: #e8b050;
+                --accent-dim: rgba(212, 149, 42, 0.12);
+                --accent-border: rgba(212, 149, 42, 0.3);
+                --accent-glow: rgba(212, 149, 42, 0.2);
+                --border: rgba(212, 149, 42, 0.07);
+                --border2: rgba(212, 149, 42, 0.14);
+                --surface: rgba(212, 149, 42, 0.03);
+                --green: #7bc47b;
+                --radius: 8px;
+                --radius-sm: 6px;
+            }
+
+            html { scroll-behavior: smooth; }
+
+            body {
+                font-family: "Inter", system-ui, sans-serif;
+                background: var(--bg);
+                color: var(--fg);
+                line-height: 1.6;
+                -webkit-font-smoothing: antialiased;
+                overflow-x: hidden;
+            }
+
+            /* Subtle noise grain overlay */
+            body::after {
+                content: "";
+                position: fixed;
+                inset: 0;
+                background-image: url("assets/textures/noise1.png");
+                background-repeat: repeat;
+                background-size: 256px 256px;
+                opacity: 0.035;
+                mix-blend-mode: overlay;
+                pointer-events: none;
+                z-index: 9999;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 2rem;
+                position: relative;
+                z-index: 1;
+            }
+
+            /* ── Nav ── */
+            nav {
+                position: fixed;
+                inset: 0 0 auto 0;
+                z-index: 1000;
+                background: rgba(14, 12, 11, 0.9);
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid var(--border2);
+            }
+            nav .container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 70px;
+            }
+            .logo {
+                font-family: "GaldernBlack", "Inter", serif;
+                font-size: 1.1rem;
+                font-weight: 900;
+                letter-spacing: 0.03em;
+                color: var(--fg);
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+            }
+            .logo-mark {
+                width: 30px;
+                height: 30px;
+                background: var(--accent);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.75rem;
+                font-weight: 900;
+                color: #0e0c0b;
+                border-radius: 4px;
+                flex-shrink: 0;
+            }
+            .logo span { color: var(--accent); }
+            .nav-links {
+                display: flex;
+                gap: 2.5rem;
+                align-items: center;
+            }
+            .nav-links a {
+                font-size: 0.875rem;
+                font-weight: 500;
+                letter-spacing: 0.03em;
+                color: var(--muted);
+                text-decoration: none;
+                transition: color 0.2s;
+            }
+            .nav-links a:hover { color: var(--fg); }
+
+            /* ── Buttons ── */
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                font-size: 0.875rem;
+                font-weight: 600;
+                letter-spacing: 0.02em;
+                padding: 0.75rem 1.5rem;
+                border-radius: var(--radius-sm);
+                text-decoration: none;
+                transition: all 0.25s;
+                border: none;
+                cursor: pointer;
+                font-family: inherit;
+            }
+            .btn-primary {
+                background: var(--accent);
+                color: #0e0c0b;
+                font-weight: 700;
+            }
+            .btn-primary:hover {
+                background: var(--accent-light);
+                box-shadow: 0 8px 30px var(--accent-glow);
+                transform: translateY(-1px);
+            }
+            .btn-ghost {
+                background: transparent;
+                color: var(--fg2);
+                border: 1px solid var(--border2);
+            }
+            .btn-ghost:hover {
+                border-color: var(--accent-border);
+                color: var(--accent);
+            }
+            .btn-lg { padding: 0.9rem 1.85rem; font-size: 0.9rem; }
+
+            /* ── Badge ── */
+            .badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-family: "Commune", "Inter", serif;
+                font-size: 0.8rem;
+                font-weight: 400;
+                letter-spacing: 0.06em;
+                color: var(--accent);
+                border: 1px solid var(--accent-border);
+                padding: 0.35rem 1rem;
+                border-radius: 100px;
+                margin-bottom: 1.75rem;
+            }
+            .badge::before {
+                content: "";
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+                background: var(--accent);
+                box-shadow: 0 0 8px var(--accent);
+                animation: glow 2.5s ease-in-out infinite;
+            }
+            @keyframes glow {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.4; }
+            }
+
+            /* ── Hero ── */
+            .hero {
+                padding: 11rem 0 8rem;
+                position: relative;
+                overflow: hidden;
+            }
+            .hero-rule {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg, transparent 10%, var(--accent) 40%, var(--accent) 60%, transparent 90%);
+                opacity: 0.3;
+            }
+            .hero-grid {
+                display: grid;
+                grid-template-columns: 1.3fr 0.7fr;
+                gap: 6rem;
+                align-items: center;
+            }
+            .hero h1 {
+                font-family: "GaldernBlack", "Inter", serif;
+                font-size: clamp(3rem, 5.5vw, 5.5rem);
+                font-weight: 900;
+                letter-spacing: -0.02em;
+                line-height: 0.95;
+                margin-bottom: 2rem;
+            }
+            .hero h1 .highlight {
+                color: var(--accent);
+                display: block;
+                margin-top: 0.15em;
+            }
+            .hero-eyebrow {
+                font-family: "Commune", "Inter", serif;
+                font-size: 0.85rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--muted);
+                margin-bottom: 1.25rem;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+            .hero-eyebrow::before,
+            .hero-eyebrow::after {
+                content: "";
+                flex: 1;
+                height: 1px;
+                background: linear-gradient(90deg, transparent, var(--accent-border));
+            }
+            .hero-eyebrow::after {
+                background: linear-gradient(90deg, var(--accent-border), transparent);
+            }
+            .hero p {
+                font-size: 1.1rem;
+                color: var(--muted);
+                max-width: 500px;
+                margin-bottom: 2.5rem;
+                line-height: 1.8;
+                font-weight: 400;
+            }
+            .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+            .hero-visual {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .hero-card {
+                background: var(--bg2);
+                border: 1px solid var(--border2);
+                border-radius: var(--radius);
+                padding: 2rem;
+                width: 100%;
+                max-width: 300px;
+                position: relative;
+                box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+            }
+            .hero-card::before {
+                content: "";
+                position: absolute;
+                top: 0; left: 1.5rem; right: 1.5rem;
+                height: 1px;
+                background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            }
+            .hero-card-title {
+                font-family: "Commune", "Inter", serif;
+                font-size: 0.75rem;
+                font-weight: 400;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--muted);
+                margin-bottom: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .hero-card-title::before {
+                content: "";
+                width: 6px; height: 6px;
+                background: var(--green);
+                box-shadow: 0 0 8px var(--green);
+                border-radius: 50%;
+            }
+            .hero-card .row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.8rem 0;
+                border-bottom: 1px solid var(--border);
+            }
+            .hero-card .row:last-child { border-bottom: none; }
+            .hero-card .label { font-size: 0.875rem; color: var(--muted); font-weight: 400; }
+            .hero-card .value { font-size: 0.9rem; font-weight: 700; color: var(--green); }
+
+            /* ── Section ── */
+            section { padding: 7rem 0; }
+            .section-header {
+                max-width: 640px;
+                margin: 0 auto 4rem;
+                text-align: center;
+            }
+            .section-header .label-commune {
+                font-family: "Commune", "Inter", serif;
+                font-size: 0.8rem;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--accent);
+                margin-bottom: 0.75rem;
+                display: block;
+            }
+            .section-header h2 {
+                font-family: "GaldernBlack", "Inter", serif;
+                font-size: clamp(2rem, 3.5vw, 3rem);
+                font-weight: 900;
+                letter-spacing: -0.02em;
+                line-height: 1.1;
+                margin-bottom: 1rem;
+            }
+            .section-header p { font-size: 1.05rem; color: var(--muted); line-height: 1.75; }
+
+            /* ── Comparison ── */
+            #difference {
+                background: var(--bg2);
+                border-top: 1px solid var(--border2);
+                border-bottom: 1px solid var(--border2);
+            }
+            .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+            .compare-card {
+                border-radius: var(--radius);
+                padding: 2.25rem;
+                border: 1px solid var(--border);
+                background: var(--bg3);
+            }
+            .compare-card h3 {
+                font-family: "Commune", "Inter", serif;
+                font-size: 0.85rem;
+                font-weight: 400;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                margin-bottom: 1.75rem;
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                color: var(--muted);
+            }
+            .compare-card ul { list-style: none; }
+            .compare-card li {
+                display: flex; align-items: flex-start; gap: 0.75rem;
+                padding: 0.75rem 0; font-size: 0.9rem; color: var(--muted);
+                border-bottom: 1px solid var(--border);
+            }
+            .compare-card li:last-child { border-bottom: none; }
+            .compare-card .icon { width: 14px; height: 14px; flex-shrink: 0; margin-top: 3px; }
+            .compare-card.us {
+                border-color: var(--accent-border);
+                background: rgba(212,149,42,0.04);
+                position: relative;
+            }
+            .compare-card.us::before {
+                content: "";
+                position: absolute;
+                top: 0; left: 0; right: 0;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, var(--accent), var(--accent-light), transparent);
+            }
+            .compare-card.us h3 { color: var(--accent); }
+            .compare-card.us li { color: var(--fg2); border-color: rgba(212,149,42,0.1); }
+            .compare-card.us .icon { color: var(--accent); }
+            .compare-card.them .icon { color: var(--muted2); }
+
+            /* ── Features ── */
+            .features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+            .feature {
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 2rem 1.5rem;
+                background: var(--bg2);
+                transition: all 0.3s;
+            }
+            .feature:hover {
+                border-color: var(--accent-border);
+                transform: translateY(-4px);
+                box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px var(--accent-border);
+            }
+            .feature-icon {
+                width: 42px; height: 42px;
+                background: var(--accent-dim);
+                border: 1px solid var(--accent-border);
+                border-radius: var(--radius-sm);
+                display: flex; align-items: center; justify-content: center;
+                margin-bottom: 1.25rem;
+                color: var(--accent);
+            }
+            .feature-icon svg { width: 20px; height: 20px; }
+            .feature h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.4rem; letter-spacing: 0.01em; color: var(--fg); }
+            .feature p { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+
+            /* ── Stats bar ── */
+            .stats-bar {
+                display: grid; grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem; margin-bottom: 4.5rem;
+            }
+            .stat-item {
+                background: var(--bg2);
+                border: 1px solid var(--border2);
+                border-radius: var(--radius);
+                padding: 2.25rem 1.5rem;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+            .stat-item::before {
+                content: "";
+                position: absolute;
+                top: 0; left: 0;
+                width: 3px; height: 100%;
+                background: linear-gradient(to bottom, var(--accent), transparent);
+            }
+            .stat-item strong {
+                display: block;
+                font-family: "GaldernBlack", "Inter", serif;
+                font-size: 2.75rem;
+                font-weight: 900;
+                color: var(--accent);
+                line-height: 1;
+                margin-bottom: 0.5rem;
+                letter-spacing: -0.02em;
+            }
+            .stat-item span {
+                font-family: "Commune", "Inter", serif;
+                font-size: 0.78rem;
+                color: var(--muted);
+                font-weight: 400;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+            }
+
+            /* ── Work ── */
+            #work { background: var(--bg2); border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border2); }
+            .work-grid {
+                display: grid; grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem; margin-bottom: 2rem;
+            }
+            .work-card {
+                border-radius: var(--radius);
+                border: 1px solid var(--border);
+                background: var(--bg3);
+                overflow: hidden;
+                transition: all 0.3s;
+            }
+            .work-card:hover { border-color: var(--accent-border); transform: translateY(-3px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+            .work-card-inner { padding: 2.25rem 2rem; display: flex; flex-direction: column; gap: 0.6rem; height: 100%; }
+            .work-logo-placeholder {
+                width: 50px; height: 50px;
+                border: 1px solid var(--accent-border);
+                border-radius: var(--radius-sm);
+                display: flex; align-items: center; justify-content: center;
+                color: var(--accent); margin-bottom: 0.5rem;
+                background: var(--accent-dim);
+            }
+            .work-card h3 {
+                font-family: "Commune", "Inter", serif;
+                font-size: 0.78rem; font-weight: 400;
+                letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+            }
+            .work-card p { font-size: 0.9rem; color: var(--muted2); line-height: 1.65; flex: 1; }
+            .work-tag {
+                display: inline-flex; align-items: center;
+                font-family: "Commune", "Inter", serif;
+                font-size: 0.7rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase;
+                color: var(--accent); border: 1px solid var(--accent-border);
+                padding: 0.25rem 0.75rem; border-radius: 100px; margin-top: 0.5rem; width: fit-content;
+            }
+            .work-note { text-align: center; font-size: 0.9rem; color: var(--muted); }
+            .work-note a { color: var(--accent); text-decoration: none; font-weight: 600; }
+            .work-note a:hover { text-decoration: underline; }
+
+            /* ── Contact ── */
+            #contact { position: relative; }
+            .cta-header { text-align: center; margin-bottom: 3.5rem; }
+            .cta-header h2 {
+                font-family: "GaldernBlack", "Inter", serif;
+                font-size: clamp(2rem, 3.5vw, 3rem);
+                font-weight: 900; letter-spacing: -0.02em;
+                line-height: 1.1; margin-bottom: 0.75rem;
+            }
+            .cta-header p { font-size: 1.05rem; color: var(--muted); }
+
+            .form-card {
+                max-width: 700px; margin: 0 auto;
+                background: var(--bg2);
+                border: 1px solid var(--border2);
+                border-radius: var(--radius);
+                padding: 2.75rem;
+                position: relative;
+                box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+            }
+            .form-card::before {
+                content: "";
+                position: absolute;
+                top: 0; left: 2rem; right: 2rem;
+                height: 1px;
+                background: linear-gradient(90deg, transparent, var(--accent), var(--accent-light), transparent);
+            }
+            .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+            .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+            .form-field.full { grid-column: 1 / -1; }
+            .form-field label {
+                font-family: "Commune", "Inter", serif;
+                font-size: 0.72rem; font-weight: 400;
+                letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+            }
+            .form-field input, .form-field textarea {
+                font-family: inherit; font-size: 0.9rem; padding: 0.85rem 1rem;
+                border-radius: var(--radius-sm); border: 1px solid var(--border2);
+                background: rgba(212,149,42,0.03); color: var(--fg); outline: none;
+                transition: border-color 0.2s, box-shadow 0.2s;
+            }
+            .form-field input::placeholder, .form-field textarea::placeholder { color: var(--muted2); }
+            .form-field input:focus, .form-field textarea:focus {
+                border-color: var(--accent-border);
+                box-shadow: 0 0 0 3px rgba(212,149,42,0.1);
+            }
+            .form-field textarea { resize: vertical; min-height: 120px; }
+            .form-card .btn-primary { width: 100%; margin-top: 0.75rem; padding: 1rem; font-size: 0.9rem; }
+
+            /* ── Divider ── */
+            .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border2), transparent); }
+
+            /* ── Footer ── */
+            footer { padding: 3.5rem 0 2.5rem; z-index: 1; position: relative; border-top: 1px solid var(--border2); }
+            .footer-inner { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; }
+            .footer-inner .logo { margin-bottom: 0.5rem; }
+            .footer-tagline { font-size: 0.9rem; color: var(--muted); }
+            .footer-location {
+                font-family: "Commune", "Inter", serif;
+                font-size: 0.8rem; color: var(--accent);
+                letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.25rem;
+            }
+            .footer-copy { font-size: 0.78rem; color: var(--muted2); }
+
+            /* ── Responsive ── */
+            @media (max-width: 980px) {
+                .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+                .hero-visual { order: -1; }
+                .hero-card { max-width: 280px; }
+                .features { grid-template-columns: repeat(2, 1fr); }
+                .stats-bar { grid-template-columns: 1fr; }
+                .work-grid { grid-template-columns: 1fr; }
+            }
+            @media (max-width: 640px) {
+                .comparison { grid-template-columns: 1fr; }
+                .features { grid-template-columns: 1fr; }
+                .form-grid { grid-template-columns: 1fr; }
+                .form-field.full { grid-column: 1; }
+                .nav-links { display: none; }
+                .hero { padding: 8rem 0 5rem; }
+                .form-card { padding: 1.75rem; }
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <div class="container">
+                <a href="#" class="logo">
+                    <div class="logo-mark">C</div>
+                    Ctrl+Alt+<span>Orion</span>
+                </a>
+                <div class="nav-links">
+                    <a href="#difference">Difference</a>
+                    <a href="#services">Services</a>
+                    <a href="#contact" class="btn btn-primary">Get a Quote</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-rule" aria-hidden="true"></div>
+            <div class="container hero-grid">
+                <div>
+                    <div class="hero-eyebrow">Portland Web Studio</div>
+                    <div class="badge">Custom Websites — No Platform Lock-in</div>
+                    <h1>Break free from<br><span class="highlight">platform lock&#8209;in.</span></h1>
+                    <p>
+                        Stop renting your business website. We build custom
+                        sites and apps you actually own — with full control,
+                        lower fees, and room to grow on your terms.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#contact" class="btn btn-primary btn-lg">Start Your Project</a>
+                        <a href="#services" class="btn btn-ghost btn-lg">Explore Services</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-card">
+                        <div class="hero-card-title">Your Website Status</div>
+                        <div class="row"><span class="label">Ownership</span><span class="value">100%</span></div>
+                        <div class="row"><span class="label">Platform fees</span><span class="value">Gone</span></div>
+                        <div class="row"><span class="label">Customization</span><span class="value">Unlimited</span></div>
+                        <div class="row"><span class="label">Portability</span><span class="value">Full</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Difference -->
+        <section id="difference">
+            <div class="container">
+                <div class="section-header">
+                    <span class="label-commune">The Difference</span>
+                    <h2>Ownership changes everything</h2>
+                    <p>Template builders charge forever and limit what you can do. We build it once — and it's yours.</p>
+                </div>
+                <div class="comparison">
+                    <div class="compare-card them">
+                        <h3>
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+                            Shopify / Squarespace
+                        </h3>
+                        <ul>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>Monthly fees that never end</li>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>Limited customization</li>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>High processing fees</li>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>Locked into their ecosystem</li>
+                        </ul>
+                    </div>
+                    <div class="compare-card us">
+                        <h3>
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 7L9 18l-5-5"/></svg>
+                            Ctrl + Alt + Orion
+                        </h3>
+                        <ul>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 7L9 18l-5-5"/></svg>You own your website forever</li>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 7L9 18l-5-5"/></svg>Fully customized to your brand</li>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 7L9 18l-5-5"/></svg>Competitive processing fees</li>
+                            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 7L9 18l-5-5"/></svg>Complete control &amp; portability</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Services -->
+        <section id="services">
+            <div class="container">
+                <div class="section-header">
+                    <span class="label-commune">Services</span>
+                    <h2>Built for your business</h2>
+                    <p>Everything you need to run, sell, and scale — without the platform tax.</p>
+                </div>
+                <div class="stats-bar">
+                    <div class="stat-item"><strong>100%</strong><span>You own your site</span></div>
+                    <div class="stat-item"><strong>~$10</strong><span>Typical monthly hosting cost</span></div>
+                    <div class="stat-item"><strong>∞</strong><span>Customization potential</span></div>
+                </div>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+                        <h3>Total Customization</h3>
+                        <p>No templates. No limits. Built exactly for your workflow.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+                        <h3>Lower Processing Fees</h3>
+                        <p>Keep more revenue with better payment rates.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+                        <h3>Employee Scheduling</h3>
+                        <p>Custom scheduling apps that fit your team.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg></div>
+                        <h3>Toast &amp; DoorDash APIs</h3>
+                        <p>Ordering and delivery integrations baked right in.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                        <h3>Shipping APIs</h3>
+                        <p>Real-time rates, labels, and tracking integrated.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></div>
+                        <h3>Custom Domain Email</h3>
+                        <p>Professional campaigns sent from your domain.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+                        <h3>Infinite Scalability</h3>
+                        <p>Grows with you from ten customers to ten thousand.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+                        <h3>Budget-Friendly</h3>
+                        <p>Custom solutions priced for small businesses.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Work -->
+        <section id="work">
+            <div class="container">
+                <div class="section-header">
+                    <span class="label-commune">Our Work</span>
+                    <h2>Businesses we've built for</h2>
+                    <p>Real sites, real owners, real control. Each one custom-built and fully owned by the client.</p>
+                </div>
+                <div class="work-grid">
+                    <div class="work-card">
+                        <div class="work-card-inner">
+                            <div class="work-logo-placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></div>
+                            <h3>Your Business Here</h3>
+                            <p>A custom site built to your brand, workflow, and goals — no templates, no compromises.</p>
+                            <span class="work-tag">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="work-card">
+                        <div class="work-card-inner">
+                            <div class="work-logo-placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
+                            <h3>Your Business Here</h3>
+                            <p>E-commerce, scheduling, ordering integrations — whatever your operation needs built in.</p>
+                            <span class="work-tag">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="work-card">
+                        <div class="work-card-inner">
+                            <div class="work-logo-placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+                            <h3>Your Business Here</h3>
+                            <p>From solo operators to full teams — scalable from day one, owned by you forever.</p>
+                            <span class="work-tag">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="work-note">Want to be the first? <a href="#contact">Let's talk.</a></p>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Contact -->
+        <section id="contact">
+            <div class="container">
+                <div class="cta-header">
+                    <div class="badge">Get Started</div>
+                    <h2>Ready to take control?</h2>
+                    <p>Let's build something sharp, fast, and fully yours.</p>
+                </div>
+                <form class="form-card" action="https://formsubmit.co/hello@ctrlaltorion.com" method="POST">
+                    <div class="form-grid">
+                        <div class="form-field"><label for="name">Name</label><input type="text" id="name" name="name" placeholder="Your name" required /></div>
+                        <div class="form-field"><label for="business">Business Name</label><input type="text" id="business" name="business" placeholder="Your business" required /></div>
+                        <div class="form-field"><label for="phone">Telephone</label><input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" required /></div>
+                        <div class="form-field"><label for="email">Email Address</label><input type="email" id="email" name="email" placeholder="you@example.com" required /></div>
+                        <div class="form-field full"><label for="message">What are you looking for?</label><textarea id="message" name="message" placeholder="Tell us a bit about your project..." required></textarea></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Quote Request</button>
+                    <input type="hidden" name="_subject" value="New quote request from Ctrl + Alt + Orion" />
+                    <input type="hidden" name="_captcha" value="false" />
+                    <input type="hidden" name="_next" value="https://ctrlaltorion.com" />
+                </form>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <footer>
+            <div class="container">
+                <div class="footer-inner">
+                    <a href="#" class="logo"><div class="logo-mark">C</div>Ctrl+Alt+<span>Orion</span></a>
+                    <p class="footer-tagline">Freeing small businesses from platform dependency.</p>
+                    <p class="footer-location">Portland, Oregon — Locally Owned &amp; Operated</p>
+                    <p class="footer-copy">&copy; 2026 Ctrl + Alt + Orion. You own your business — own your website too.</p>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
