@@ -412,11 +412,53 @@
             .footer-location { font-size: 0.875rem; color: var(--green); font-weight: 700; margin-bottom: 1.25rem; }
             .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
 
+            /* ── Hamburger ── */
+            .nav-burger {
+                display: none;
+                flex-direction: column;
+                justify-content: center;
+                gap: 5px;
+                width: 40px; height: 40px;
+                background: none; border: 2px solid var(--fg);
+                border-radius: var(--radius-sm);
+                cursor: pointer; padding: 8px; flex-shrink: 0;
+            }
+            .nav-burger span {
+                display: block; width: 100%; height: 2px;
+                background: var(--fg); border-radius: 2px;
+                transition: transform 0.2s, opacity 0.2s;
+            }
+            .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+            .nav-burger.open span:nth-child(2) { opacity: 0; }
+            .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+            .nav-mobile {
+                display: none;
+                flex-direction: column;
+                background: rgba(245, 245, 240, 0.98);
+                backdrop-filter: blur(20px);
+                border-top: 2px solid var(--border2);
+                padding: 0.75rem 1.5rem 1.25rem;
+                gap: 0;
+            }
+            .nav-mobile.open { display: flex; }
+            .nav-mobile a:not(.btn) {
+                font-size: 1rem; font-weight: 600; color: var(--muted);
+                text-decoration: none; padding: 0.85rem 0;
+                border-bottom: 1px solid var(--border);
+                transition: color 0.2s;
+            }
+            .nav-mobile a:not(.btn):hover { color: var(--fg); }
+            .nav-mobile .btn {
+                margin-top: 1rem; width: 100%;
+                justify-content: center; text-align: center;
+            }
+
             /* ── Responsive ── */
             @media (max-width: 980px) {
-                .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
-                .hero-visual { order: -1; }
-                .hero-card { max-width: 280px; }
+                .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; padding: 9rem 0 6rem; }
+                .hero-visual { order: 1; }
+                .hero-card { max-width: 340px; }
                 .features { grid-template-columns: repeat(2, 1fr); }
                 .stats-bar { grid-template-columns: 1fr; }
                 .work-grid { grid-template-columns: 1fr; }
@@ -428,7 +470,20 @@
                 .form-grid { grid-template-columns: 1fr; }
                 .form-field.full { grid-column: 1; }
                 .nav-links { display: none; }
+                .nav-burger { display: flex; }
                 .form-card { padding: 1.5rem; }
+                section { padding: 3.5rem 0; }
+                .hero-grid { padding: 5.5rem 0 3.5rem; gap: 1.75rem; }
+                .hero h1 { font-size: 2.6rem; }
+                .hero p { font-size: 0.975rem; }
+                .hero-actions { flex-direction: column; }
+                .hero-actions .btn { width: 100%; justify-content: center; }
+                .hero-card { max-width: 100%; }
+                .stat-item strong { font-size: 2.25rem; }
+                .section-header { margin-bottom: 2rem; }
+                .features { gap: 1rem; }
+                .stats-bar { gap: 1rem; }
+                .work-grid { gap: 1rem; }
             }
         </style>
     </head>
@@ -443,6 +498,14 @@
                     <a href="#services">Services</a>
                     <a href="#contact" class="btn btn-primary">Get a Quote</a>
                 </div>
+                <button class="nav-burger" id="navBurger" aria-label="Open navigation menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+            <div class="nav-mobile" id="navMobile">
+                <a href="#difference">Difference</a>
+                <a href="#services">Services</a>
+                <a href="#contact" class="btn btn-primary">Get a Quote</a>
             </div>
         </nav>
 
@@ -611,6 +674,20 @@
         <script>
             // Slow down background videos by 30% (play at 70% speed)
             document.querySelectorAll('video').forEach(v => v.playbackRate = 0.7);
+
+            // Mobile nav toggle
+            const burger = document.getElementById('navBurger');
+            const mobileNav = document.getElementById('navMobile');
+            burger.addEventListener('click', () => {
+                burger.classList.toggle('open');
+                mobileNav.classList.toggle('open');
+            });
+            mobileNav.querySelectorAll('a').forEach(a => {
+                a.addEventListener('click', () => {
+                    burger.classList.remove('open');
+                    mobileNav.classList.remove('open');
+                });
+            });
         </script>
     </body>
 </html>
