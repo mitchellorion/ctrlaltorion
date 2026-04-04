@@ -10,3 +10,6 @@ assets/backgrounds/liquid8.png
 
 # Exclude gallery (not used in site)
 gallery/
+
+# Local Netlify folder
+.netlify
