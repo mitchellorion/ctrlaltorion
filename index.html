@@ -3,6 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://s.wordpress.com; media-src 'self'; script-src 'self' 'unsafe-inline'; form-action https://formsubmit.co; frame-ancestors 'none';" />
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
         <title>Ctrl + Alt + Orion — Own Your Website</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -649,6 +651,8 @@
                     <h2>Ready to take control?</h2>
                     <p>Let's build something sharp, fast, and fully yours.</p>
                 </div>
+                <!-- TODO: replace the email in the action URL with your FormSubmit hash to hide it from spam scrapers.
+                     Go to https://formsubmit.co, activate your email, then use the hash URL they provide. -->
                 <form class="form-card" action="https://formsubmit.co/hello@ctrlaltorion.com" method="POST">
                     <div class="form-grid">
                         <div class="form-field"><label for="name">Name</label><input type="text" id="name" name="name" placeholder="Your name" required /></div>
@@ -661,6 +665,8 @@
                     <input type="hidden" name="_subject" value="New quote request from Ctrl + Alt + Orion" />
                     <input type="hidden" name="_captcha" value="false" />
                     <input type="hidden" name="_next" value="https://ctrlaltorion.com" />
+                    <!-- Honeypot: bots fill this, humans don't — FormSubmit ignores the submission if filled -->
+                    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
                 </form>
             </div>
         </section>
