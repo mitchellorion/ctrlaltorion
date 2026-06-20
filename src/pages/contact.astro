@@ -1,0 +1,87 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Badge from '@/components/ui/Badge.astro';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Have a project in mind? Let's talk."
+>
+  <div class="pt-32 pb-24 px-6">
+    <div class="max-w-3xl mx-auto">
+      <Badge tag="contact" />
+      <h1 class="font-display text-5xl md:text-7xl font-bold text-cream leading-tight mt-6 mb-4">
+        Let's build<br />something.
+      </h1>
+      <p class="text-muted mb-12 max-w-md leading-relaxed">
+        Have a project, an idea, or a tech problem you can't seem to solve?
+        Tell me what's going on. I'll get back to you within 24 hours.
+      </p>
+
+      <form
+        class="space-y-6"
+        method="POST"
+        action="/api/contact"
+      >
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="flex flex-col gap-2">
+            <label for="name" class="font-mono text-xs text-muted">name</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              placeholder="Your name"
+              class="bg-surface border border-border text-cream placeholder:text-muted/40 px-4 py-3 font-sans text-sm focus:outline-none focus:border-violet transition-colors"
+            />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="email" class="font-mono text-xs text-muted">email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              placeholder="you@example.com"
+              class="bg-surface border border-border text-cream placeholder:text-muted/40 px-4 py-3 font-sans text-sm focus:outline-none focus:border-violet transition-colors"
+            />
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="subject" class="font-mono text-xs text-muted">what do you need?</label>
+          <select
+            id="subject"
+            name="subject"
+            class="bg-surface border border-border text-cream px-4 py-3 font-mono text-sm focus:outline-none focus:border-violet transition-colors"
+          >
+            <option value="app">Build an app</option>
+            <option value="web">Build a website</option>
+            <option value="automation">Set up automations</option>
+            <option value="consult">Just need advice</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="message" class="font-mono text-xs text-muted">tell me more</label>
+          <textarea
+            id="message"
+            name="message"
+            rows={6}
+            required
+            placeholder="What are you trying to build or solve? The more detail, the better."
+            class="bg-surface border border-border text-cream placeholder:text-muted/40 px-4 py-3 font-sans text-sm focus:outline-none focus:border-violet transition-colors resize-none"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="font-mono text-sm bg-cream text-ink px-8 py-3 hover:bg-cream/80 transition-colors"
+        >
+          Send it →
+        </button>
+      </form>
+    </div>
+  </div>
+</BaseLayout>

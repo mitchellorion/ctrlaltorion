@@ -1,0 +1,76 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import { getCollection } from 'astro:content';
+
+const allArticles = await getCollection('articles');
+const articles = allArticles.sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+
+const allTags = [...new Set(articles.flatMap((a) => a.data.tags))].sort();
+---
+
+<BaseLayout title="Articles" description="Tech writing on AI, products, tutorials, and more.">
+  <div class="pt-32 pb-24 px-6">
+    <div class="max-w-7xl mx-auto">
+      <Badge tag="articles" />
+      <h1 class="font-display text-5xl md:text-7xl font-bold text-cream leading-tight mt-6 mb-8">
+        The archive.
+      </h1>
+      <p class="text-muted max-w-md mb-16 leading-relaxed">
+        AI headlines, product breakdowns, tutorials, and takes.
+        No fluff — just things I actually find worth writing about.
+      </p>
+
+      {allTags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mb-12">
+          {allTags.map((tag) => (
+            <Badge tag={tag} href={`/articles?tag=${tag}`} />
+          ))}
+        </div>
+      )}
+
+      {articles.length === 0 ? (
+        <div class="border border-border p-16 text-center">
+          <p class="font-mono text-sm text-muted">Articles coming soon.</p>
+        </div>
+      ) : (
+        <div class="flex flex-col divide-y divide-border">
+          {articles.map((article) => (
+            <a
+              href={`/articles/${article.slug}`}
+              class="group py-8 flex flex-col md:flex-row md:items-center gap-4 md:gap-8 hover:bg-surface -mx-6 px-6 transition-colors"
+            >
+              <div class="flex flex-wrap gap-2 md:w-56 shrink-0">
+                {article.data.tags.slice(0, 2).map((tag) => (
+                  <Badge tag={tag} />
+                ))}
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <h2 class="font-display text-xl md:text-2xl font-bold text-cream group-hover:text-violet transition-colors">
+                  {article.data.title}
+                </h2>
+                <p class="text-muted text-sm mt-1 leading-relaxed line-clamp-2">
+                  {article.data.description}
+                </p>
+              </div>
+
+              <time
+                class="font-mono text-xs text-muted shrink-0"
+                datetime={article.data.pubDate.toISOString()}
+              >
+                {new Intl.DateTimeFormat('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric',
+                }).format(article.data.pubDate)}
+              </time>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>

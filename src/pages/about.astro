@@ -1,0 +1,73 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="About"
+  description="I'm Orion — a tech consultant and builder who does apps, websites, automations, and whatever else you throw at me."
+>
+  <div class="pt-32 pb-24 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+        <div>
+          <Badge tag="about" />
+          <h1 class="font-display text-5xl md:text-7xl font-bold text-cream leading-tight mt-6 mb-8">
+            I'm Orion.
+          </h1>
+          <div class="space-y-6 text-muted leading-relaxed">
+            <p class="text-lg">
+              I'm a tech consultant and builder. I help people and businesses get things done —
+              apps, websites, automations, integrations, or whatever else is standing between
+              you and where you want to be.
+            </p>
+            <p>
+              The name is a keyboard shortcut reference. Ctrl+Alt+Delete restarts a frozen machine.
+              That's kind of what I do — come in when things are stuck, messy, or don't exist yet,
+              and make them work.
+            </p>
+            <p>
+              I also run this publication where I write about things I actually find interesting:
+              AI tools, new products, tutorials on what I'm building, and takes on where tech is going.
+              No filler. No SEO-bait listicles.
+            </p>
+          </div>
+
+          <div class="mt-10 flex flex-wrap gap-4">
+            <Button href="/contact">Work with me →</Button>
+            <Button href="/articles" variant="outline">Read the articles →</Button>
+          </div>
+        </div>
+
+        <div class="space-y-8">
+          <div class="border border-border p-8">
+            <h2 class="font-mono text-xs text-violet mb-6">[ctrl + alt + stack]</h2>
+            <div class="grid grid-cols-2 gap-4">
+              {['TypeScript', 'React', 'Next.js', 'Astro', 'Node.js', 'Python', 'PostgreSQL', 'Supabase', 'Vercel', 'AWS', 'Zapier/Make', 'Whatever it takes'].map((skill) => (
+                <span class="font-mono text-sm text-muted">{skill}</span>
+              ))}
+            </div>
+          </div>
+
+          <div class="border border-border p-8">
+            <h2 class="font-mono text-xs text-violet mb-6">[ctrl + alt + how-it-works]</h2>
+            <ol class="space-y-4">
+              {[
+                { step: '01', text: 'Tell me what you need' },
+                { step: '02', text: "I scope it and tell you what it'll take" },
+                { step: '03', text: 'We build it' },
+                { step: '04', text: "You've got the tech you needed" },
+              ].map(({ step, text }) => (
+                <li class="flex gap-4">
+                  <span class="font-mono text-xs text-violet w-6 shrink-0">{step}</span>
+                  <span class="text-muted text-sm">{text}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

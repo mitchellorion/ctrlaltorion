@@ -1,0 +1,21 @@
+---
+interface Props {
+  variant: 'sidebar' | 'footer' | 'inline';
+}
+
+const { variant } = Astro.props;
+
+const sizes = {
+  sidebar: 'w-full min-h-[250px]',
+  footer: 'w-full min-h-[90px] mt-12',
+  inline: 'w-full min-h-[90px] my-8',
+};
+---
+
+<div
+  class:list={['border border-border/50 flex items-center justify-center', sizes[variant]]}
+  data-ad-slot={variant}
+>
+  <!-- Google AdSense slot — replace with actual ad code -->
+  <span class="font-mono text-xs text-muted/40">ad</span>
+</div>

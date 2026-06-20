@@ -1,0 +1,48 @@
+---
+title: "Why I use Astro for content sites (and you probably should too)"
+description: "I've built sites in Next.js, Gatsby, Nuxt, and plain HTML. For content-forward projects, Astro is now my default — here's why."
+pubDate: 2026-05-28
+tags: ["tutorial", "web"]
+featured: false
+---
+
+I've been building websites for a long time. I've used all the major frameworks and gone through the whole cycle of "this is the one" multiple times. For content sites — blogs, publications, portfolios, marketing pages — Astro has become my default.
+
+Here's what sold me.
+
+## Zero JS by default
+
+Astro ships zero JavaScript by default. You opt in to interactivity at the component level with what they call "islands." Everything else is static HTML.
+
+For a blog or publication, that's exactly what you want. Fast pages, clean markup, no bloat.
+
+Compare that to a Next.js site where you're fighting the framework to not ship 200kb of runtime to display a paragraph of text.
+
+## Content collections
+
+Astro's content collections are genuinely good. You define a schema, write your content in MDX, and get fully typed frontmatter. Refactoring is safe because TypeScript will yell at you if you forget a required field.
+
+```ts
+const articles = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    pubDate: z.coerce.date(),
+    tags: z.array(z.string()),
+  }),
+});
+```
+
+That's it. Now your content folder is a typed database.
+
+## It doesn't try to do everything
+
+This is the thing I appreciate most. Astro knows what it is: a framework for building content sites. It doesn't try to be a full-stack app framework. When you need dynamic server behavior, you can reach for endpoints or hybrid rendering — but those are escape hatches, not the default path.
+
+That restraint makes it genuinely good at what it does.
+
+## When I wouldn't use it
+
+If you're building a complex SPA, an app with lots of client-side state, or something with a lot of real-time features, Astro isn't the move. Next.js or Remix will serve you better.
+
+But if you're building a site that's primarily content with some sprinkles of interactivity? Astro.

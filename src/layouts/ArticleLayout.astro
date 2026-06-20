@@ -1,0 +1,149 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import AdSlot from '@/components/ui/AdSlot.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  tags: string[];
+  image?: string;
+}
+
+const { title, description, pubDate, tags, image } = Astro.props;
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(pubDate);
+---
+
+<BaseLayout title={title} description={description}>
+  <article>
+    <header class="bg-ink border-b border-border pt-24 pb-16 px-6">
+      <div class="max-w-3xl mx-auto">
+        <div class="flex flex-wrap gap-2 mb-6">
+          {tags.map((tag) => <Badge tag={tag} />)}
+        </div>
+        <h1 class="font-display text-4xl md:text-6xl font-bold text-cream leading-tight mb-6">
+          {title}
+        </h1>
+        <p class="text-xl text-muted mb-8">{description}</p>
+        <time class="font-mono text-sm text-muted" datetime={pubDate.toISOString()}>
+          {formattedDate}
+        </time>
+      </div>
+    </header>
+
+    {image && (
+      <div class="max-w-5xl mx-auto px-6 -mt-px">
+        <img src={image} alt={title} class="w-full aspect-video object-cover" />
+      </div>
+    )}
+
+    <div class="max-w-3xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-[1fr_200px] gap-12">
+      <div class="prose-article">
+        <slot />
+        <AdSlot variant="footer" />
+      </div>
+      <aside class="hidden lg:block">
+        <div class="sticky top-8">
+          <AdSlot variant="sidebar" />
+        </div>
+      </aside>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose-article {
+    color: #c8c8c0;
+    font-size: 1.125rem;
+    line-height: 1.8;
+  }
+
+  .prose-article :global(h2) {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #F5F5F0;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose-article :global(h3) {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #F5F5F0;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose-article :global(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  .prose-article :global(a) {
+    color: #6C63FF;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .prose-article :global(code) {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875em;
+    background: #2a2a2a;
+    color: #6C63FF;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+  }
+
+  .prose-article :global(pre) {
+    background: #161616;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+  }
+
+  .prose-article :global(pre code) {
+    background: none;
+    color: #c8c8c0;
+    padding: 0;
+  }
+
+  .prose-article :global(blockquote) {
+    border-left: 3px solid #6C63FF;
+    padding-left: 1.5rem;
+    color: #888888;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .prose-article :global(ul),
+  .prose-article :global(ol) {
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .prose-article :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .prose-article :global(ul li) {
+    list-style-type: disc;
+  }
+
+  .prose-article :global(ol li) {
+    list-style-type: decimal;
+  }
+
+  .prose-article :global(hr) {
+    border-color: #2a2a2a;
+    margin: 3rem 0;
+  }
+</style>

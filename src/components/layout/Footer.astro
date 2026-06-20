@@ -1,0 +1,40 @@
+---
+const year = new Date().getFullYear();
+
+const links = [
+  { href: '/articles', label: 'articles' },
+  { href: '/work', label: 'work' },
+  { href: '/about', label: 'about' },
+  { href: '/contact', label: 'contact' },
+];
+---
+
+<footer class="bg-surface border-t border-border mt-24">
+  <div class="max-w-7xl mx-auto px-6 py-16">
+    <div class="flex flex-col md:flex-row justify-between gap-12">
+      <div>
+        <a href="/" class="font-mono text-cream text-sm">[ctrl + alt + orion]</a>
+        <p class="text-muted text-sm mt-3 max-w-xs leading-relaxed">
+          Ctrl, alt, and delete your tech problems.
+        </p>
+      </div>
+
+      <nav>
+        <ul class="flex flex-col md:flex-row gap-4 md:gap-8">
+          {links.map(({ href, label }) => (
+            <li>
+              <a href={href} class="font-mono text-sm text-muted hover:text-cream transition-colors">
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <div class="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="font-mono text-xs text-muted">© {year} ctrl + alt + orion. All rights reserved.</p>
+      <p class="font-mono text-xs text-muted">Built with Astro.</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,39 @@
+---
+import Button from '@/components/ui/Button.astro';
+---
+
+<section class="min-h-screen bg-ink flex flex-col justify-between pt-16 px-6 pb-16">
+  <div class="max-w-7xl mx-auto w-full flex flex-col justify-between h-full min-h-[calc(100vh-4rem)]">
+    <div class="flex justify-end pt-8">
+      <span class="font-mono text-xs text-muted border border-border px-3 py-1">
+        [ctrl + alt + orion]
+      </span>
+    </div>
+
+    <div class="py-16 md:py-24">
+      <h1 class="font-display text-6xl md:text-8xl lg:text-[10rem] font-bold text-cream leading-[0.9] tracking-tight">
+        I build<br />
+        the tech<br />
+        you need.
+      </h1>
+
+      <p class="font-mono text-muted text-sm md:text-base mt-8 max-w-md leading-relaxed">
+        Apps · Websites · Automations · Whatever — if it's tech, I can do it.
+      </p>
+
+      <div class="flex flex-wrap gap-4 mt-10">
+        <Button href="/contact">Work together →</Button>
+        <Button href="/articles" variant="outline">Read the articles →</Button>
+      </div>
+    </div>
+
+    <div class="border-t border-border pt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <p class="font-mono text-xs text-muted">
+        ⌃ consulting  ·  ⌥ building  ·  ⌘ shipping
+      </p>
+      <a href="#work" class="font-mono text-xs text-muted hover:text-cream transition-colors">
+        scroll to explore ↓
+      </a>
+    </div>
+  </div>
+</section>
