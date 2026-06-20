@@ -2,21 +2,55 @@
 interface Props {
   tag: string;
   href?: string;
+  size?: 'sm' | 'lg';
 }
 
-const { tag, href } = Astro.props;
-const label = `[ctrl + alt + ${tag}]`;
+const { tag, href, size = 'sm' } = Astro.props;
 ---
 
 {href ? (
-  <a
-    href={href}
-    class="font-mono text-xs text-violet border border-violet/40 px-2 py-1 hover:bg-violet/10 transition-colors inline-block"
-  >
-    {label}
+  <a href={href} class:list={['keycap', size === 'lg' && 'keycap-lg']}>
+    {tag}
   </a>
 ) : (
-  <span class="font-mono text-xs text-violet border border-violet/40 px-2 py-1 inline-block">
-    {label}
+  <span class:list={['keycap', size === 'lg' && 'keycap-lg']}>
+    {tag}
   </span>
 )}
+
+<style>
+  .keycap {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #C8C8D0;
+    background: #2C2C32;
+    border: 1px solid #3A3A44;
+    border-radius: 5px;
+    padding: 3px 9px 5px;
+    box-shadow: 0 3px 0 #2A3BAC, 0 4px 8px rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+    transition: box-shadow 0.1s ease, transform 0.1s ease;
+    user-select: none;
+  }
+
+  .keycap:hover {
+    box-shadow: 0 2px 0 #2A3BAC, 0 3px 6px rgba(0, 0, 0, 0.6);
+    transform: translateY(1px);
+    color: #E8E8F0;
+  }
+
+  .keycap-lg {
+    font-size: 1rem;
+    padding: 6px 18px 10px;
+    border-radius: 7px;
+    box-shadow: 0 5px 0 #2A3BAC, 0 7px 14px rgba(0, 0, 0, 0.7);
+  }
+
+  .keycap-lg:hover {
+    box-shadow: 0 3px 0 #2A3BAC, 0 4px 10px rgba(0, 0, 0, 0.7);
+    transform: translateY(2px);
+  }
+</style>

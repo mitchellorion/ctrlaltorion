@@ -10,8 +10,10 @@ const currentPath = Astro.url.pathname;
 
 <header class="fixed top-0 left-0 right-0 z-50 bg-ink/90 backdrop-blur-sm border-b border-border">
   <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-    <a href="/" class="font-mono text-sm text-cream hover:text-violet transition-colors">
-      [ctrl + alt + orion]
+    <a href="/" class="flex items-center gap-1.5 group" aria-label="ctrl alt orion home">
+      <span class="keycap-logo">ctrl</span>
+      <span class="keycap-logo">alt</span>
+      <span class="keycap-logo keycap-logo--accent">orion</span>
     </a>
 
     <div class="flex items-center gap-8">
@@ -33,10 +35,35 @@ const currentPath = Astro.url.pathname;
 
       <a
         href="/contact"
-        class="font-mono text-sm bg-violet text-cream px-4 py-2 hover:bg-violet/80 transition-colors"
+        class="font-sans font-medium text-sm bg-cream text-ink px-4 py-2 rounded-sm hover:bg-white transition-colors"
       >
         hire me →
       </a>
     </div>
   </nav>
 </header>
+
+<style>
+  .keycap-logo {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #C8C8D0;
+    background: #2C2C32;
+    border: 1px solid #3A3A44;
+    border-radius: 4px;
+    padding: 2px 7px 4px;
+    box-shadow: 0 2px 0 #2A3BAC, 0 3px 6px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.1s ease, transform 0.1s ease;
+  }
+
+  .group:hover .keycap-logo {
+    box-shadow: 0 1px 0 #2A3BAC, 0 2px 4px rgba(0, 0, 0, 0.5);
+    transform: translateY(1px);
+  }
+
+  .keycap-logo--accent {
+    color: #A8B4FF;
+  }
+</style>

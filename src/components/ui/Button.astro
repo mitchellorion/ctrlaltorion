@@ -10,9 +10,9 @@ const { href, variant = 'primary' } = Astro.props;
 <a
   href={href}
   class:list={[
-    'font-mono text-sm px-6 py-3 inline-block transition-colors',
-    variant === 'primary' && 'bg-cream text-ink hover:bg-cream/80',
-    variant === 'outline' && 'border border-cream/30 text-cream hover:border-cream hover:bg-cream/5',
+    'font-sans font-medium text-sm px-6 py-3 inline-block transition-all rounded-sm',
+    variant === 'primary' && 'bg-cream text-ink hover:bg-white',
+    variant === 'outline' && 'border border-border text-cream hover:border-cream/60 hover:bg-cream/5',
   ]}
 >
   <slot />

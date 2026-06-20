@@ -1,4 +1,5 @@
 ---
+import Badge from '@/components/ui/Badge.astro';
 const services = [
   {
     tag: 'apps',
@@ -32,7 +33,7 @@ const services = [
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-border">
       {services.map(({ tag, title, description }) => (
         <div class="bg-surface p-8 flex flex-col gap-4">
-          <span class="font-mono text-xs text-violet">[ctrl + alt + {tag}]</span>
+          <Badge tag={tag} />
           <h3 class="font-display text-xl font-bold text-cream">{title}</h3>
           <p class="text-muted text-sm leading-relaxed">{description}</p>
         </div>
