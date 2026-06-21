@@ -146,4 +146,32 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
     border-color: #2a2a2a;
     margin: 3rem 0;
   }
+
+  .prose-article :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .prose-article :global(th),
+  .prose-article :global(td) {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid #2a2a2a;
+    vertical-align: top;
+  }
+
+  .prose-article :global(thead th) {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #F5F5F0;
+    background: #161616;
+  }
+
+  .prose-article :global(tbody tr:hover) {
+    background: #161616;
+  }
 </style>
