@@ -5,32 +5,46 @@ import Button from '@/components/ui/Button.astro';
 <section class="relative min-h-screen bg-ink overflow-hidden flex flex-col pt-16">
 
   <!-- Floating keycap images — decorative layer -->
+  <!--
+    Spread across three bands so the keys never cram together:
+    - mobile: ctrl peeks top-right, alt peeks mid-right, orion centered below the CTAs
+    - desktop: a loose triangle across the right side (ctrl center-upper, alt far-right, orion center-lower)
+  -->
   <div class="absolute inset-0 pointer-events-none select-none" aria-hidden="true">
-    <!-- ctrl: top-right, large, tilted left -->
+    <!-- ctrl: top band (upper center-right on desktop) -->
     <img
       src="/key-ctrl.png"
       alt=""
-      class="absolute w-48 md:w-64 lg:w-72 opacity-90"
-      style="top: 8%; right: 12%; transform: rotate(-8deg);"
+      class="absolute rotate-[-8deg] opacity-90
+             w-28 top-[5%] right-[-8%]
+             sm:w-36 sm:right-[0%]
+             md:w-48 md:top-[12%] md:right-[32%]
+             lg:w-52"
     />
-    <!-- alt: middle-right, medium, tilted right -->
+    <!-- alt: middle band (far right on desktop) -->
     <img
       src="/key-alt.png"
       alt=""
-      class="absolute w-36 md:w-48 lg:w-56 opacity-80"
-      style="top: 42%; right: 5%; transform: rotate(6deg);"
+      class="absolute rotate-[6deg] opacity-80
+             w-24 top-[45%] right-[-10%]
+             sm:w-32 sm:right-[-2%]
+             md:w-44 md:top-[48%] md:right-[8%]
+             lg:w-48"
     />
-    <!-- orion: bottom-right, biggest, slight tilt -->
+    <!-- orion: bottom band (centered below CTAs on mobile, lower center-right on desktop) -->
     <img
       src="/key-orion.png"
       alt=""
-      class="absolute w-56 md:w-72 lg:w-96 opacity-95"
-      style="bottom: 5%; right: 18%; transform: rotate(-3deg);"
+      class="absolute rotate-[-3deg] opacity-95
+             w-40 bottom-[7%] left-1/2 -translate-x-1/2
+             sm:w-44
+             md:w-64 md:bottom-[8%] md:left-auto md:right-[24%] md:translate-x-0
+             lg:w-72"
     />
   </div>
 
   <!-- Content -->
-  <div class="relative z-10 max-w-7xl mx-auto w-full px-6 flex flex-col justify-center flex-1 py-20">
+  <div class="relative z-10 max-w-7xl mx-auto w-full px-6 flex flex-col justify-start md:justify-center flex-1 py-20">
 
     <p class="font-mono text-xs text-muted mb-8 tracking-widest uppercase">
       ctrl + alt + orion
