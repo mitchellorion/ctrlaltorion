@@ -147,6 +147,19 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
     margin: 3rem 0;
   }
 
+  .prose-article :global(p > img),
+  .prose-article :global(img) {
+    display: block;
+    width: 100%;
+    max-width: 460px;
+    margin: 2rem auto;
+    background: #ffffff;
+    padding: 1rem;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+
   .prose-article :global(table) {
     width: 100%;
     border-collapse: collapse;
