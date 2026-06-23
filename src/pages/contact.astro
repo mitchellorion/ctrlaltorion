@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Badge from '@/components/ui/Badge.astro';
+
+// Public Web3Forms access key. Set PUBLIC_WEB3FORMS_KEY in Vercel env,
+// or replace the fallback string below with your key from web3forms.com.
+const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '3e05cf6b-15a7-48c4-9ec8-14b0ea9116fc';
 ---
 
 <BaseLayout
@@ -19,10 +23,24 @@ import Badge from '@/components/ui/Badge.astro';
       </p>
 
       <form
+        id="contact-form"
         class="space-y-6"
         method="POST"
-        action="/api/contact"
+        action="https://api.web3forms.com/submit"
       >
+        <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
+        <input type="hidden" name="subject" value="New message from ctrlaltorion.com" />
+        <input type="hidden" name="from_name" value="ctrl + alt + orion" />
+        <!-- Honeypot: bots fill this, humans never see it -->
+        <input
+          type="checkbox"
+          name="botcheck"
+          class="hidden"
+          style="display:none"
+          tabindex="-1"
+          autocomplete="off"
+        />
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="flex flex-col gap-2">
             <label for="name" class="font-mono text-xs text-muted">name</label>
@@ -52,7 +70,7 @@ import Badge from '@/components/ui/Badge.astro';
           <label for="subject" class="font-mono text-xs text-muted">what do you need?</label>
           <select
             id="subject"
-            name="subject"
+            name="need"
             class="bg-surface border border-border text-cream px-4 py-3 font-mono text-sm focus:outline-none focus:border-violet transition-colors"
           >
             <option value="app">Build an app</option>
@@ -77,11 +95,62 @@ import Badge from '@/components/ui/Badge.astro';
 
         <button
           type="submit"
-          class="font-mono text-sm bg-cream text-ink px-8 py-3 hover:bg-cream/80 transition-colors"
+          class="font-mono text-sm bg-cream text-ink px-8 py-3 hover:bg-cream/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Send it →
         </button>
       </form>
+
+      <p
+        id="form-status"
+        class="mt-6 font-mono text-sm"
+        role="status"
+        aria-live="polite"
+      ></p>
     </div>
   </div>
+
+  <script is:inline>
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+
+    if (form && status) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]');
+        const label = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        status.textContent = '';
+        status.className = 'mt-6 font-mono text-sm';
+
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { Accept: 'application/json' },
+          });
+          const data = await res.json();
+
+          if (res.ok && data.success) {
+            form.reset();
+            status.textContent = "Got it — I'll get back to you within 24 hours.";
+            status.className = 'mt-6 font-mono text-sm text-violet';
+          } else {
+            status.textContent =
+              (data && data.message) ||
+              'Something went wrong. Email me directly at mitchell@ctrlaltorion.com.';
+            status.className = 'mt-6 font-mono text-sm text-red-400';
+          }
+        } catch (err) {
+          status.textContent =
+            'Network error. Email me directly at mitchell@ctrlaltorion.com.';
+          status.className = 'mt-6 font-mono text-sm text-red-400';
+        } finally {
+          btn.disabled = false;
+          btn.textContent = label;
+        }
+      });
+    }
+  </script>
 </BaseLayout>
