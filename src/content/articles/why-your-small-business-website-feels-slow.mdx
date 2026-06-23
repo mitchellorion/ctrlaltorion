@@ -1,0 +1,133 @@
+---
+title: "Why Your Small Business Website Feels Slow (and the 6 Things Actually Causing It)"
+description: "Your speed test said 92. Your site still feels like wet cement. Here's why the score lies — and the six things actually slowing you down, ranked by how often they're the real culprit."
+pubDate: 2026-06-22
+tags: ["website speed", "core web vitals", "small business", "web performance", "site speed"]
+---
+
+You ran the test. You typed your URL into PageSpeed Insights, watched the little dial spin, and it spat back a number in the 90s. Green. Passing. *Fast.*
+
+And yet every time you actually load your own site on your phone, in the car, on the same network your customers use, it sits there. The hero image fades in a beat late. A button jumps. You tap it and nothing happens for a half-second that feels like a full one.
+
+You're not imagining it. And you're not bad at reading speed tests. The score is just measuring the wrong thing — or rather, it's measuring *a* thing that isn't the thing your customers feel.
+
+Let me show you the gap, then name the six things that are actually causing it.
+
+## The lie of the lab score
+
+Here's the part nobody puts at the top of their "10 ways to speed up your website" post, probably because it makes the other nine points sound smaller than they are.
+
+When Google decides whether your site is fast, it doesn't use the clean test you ran on office wifi. It uses the **75th percentile of your real visitors** — real phones, real networks, real thumb-smudged screens. Per Google's own Chrome team, the Core Web Vitals thresholds are set so that **75% of real visits must hit "good"** before a page passes ([web.dev](https://web.dev/articles/defining-core-web-vitals-thresholds)).
+
+Read that again, because it's the whole article: your single fast run is one data point. Google is grading the slow three-quarters mark of everyone who's ever loaded the page on a mid-range Android with three bars of signal.
+
+That's why a green lab score and a sluggish-feeling site can — and constantly do — live in the same house. The lab test is a controlled sprint on a fresh track. Your customers are running the same race in the rain, in traffic, carrying groceries.
+
+Three numbers decide the verdict, and they're worth knowing in human terms ([Google Search Central](https://developers.google.com/search/docs/appearance/core-web-vitals)):
+
+- **LCP (Largest Contentful Paint)** — how long until the biggest thing on screen (usually your hero image or headline) actually shows up. Good is under **2.5 seconds**. Over 4 is "poor."
+- **INP (Interaction to Next Paint)** — you tap, how long until the page visibly responds. Good is under **200 milliseconds**. Over 500ms is the lag you *feel* but can't name.
+- **CLS (Cumulative Layout Shift)** — how much the page jumps around as stuff loads in late. Good is under **0.1**. This is the one that makes you tap the wrong button.
+
+LCP is "why is it taking so long to *appear*." INP is "why is it taking so long to *respond*." CLS is "why did it just *move*." Your site can ace one and faceplant the others, and the overall feel is dragged down by whichever is worst.
+
+![An animated loading spinner.](/articles/loading-throbber-cc.gif)
+*That feeling, animated. Loading spinner: Ahm masum / Wikimedia Commons, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Loading_icon.gif).*
+
+## A quick word on why this matters (then we move on)
+
+I'll keep this short because speed-equals-money is the most over-quoted idea in web performance, and you already believe it. But the leverage is real:
+
+Bounce probability climbs hard as load time creeps — roughly **32% more likely to bounce** going from 1 to 3 seconds, and it keeps climbing from there ([Envisage Digital](https://www.envisagedigital.co.uk/website-load-time-statistics/)). The often-cited figure is that **53% of mobile visitors abandon a page that takes over 3 seconds** — a number that traces back to a 2017 Google/SOASTA study. And conversions tend to slide a few percent for every extra second, with the widely-quoted figure landing around 7% ([Edmonds Commerce](https://edmondscommerce.co.uk/research/performance/load-time-impact/) ties load time to revenue too).
+
+I'm flagging those numbers honestly instead of dressing them up, because half the internet quotes them as gospel without a primary source. The direction is not in dispute: slower site, fewer customers, less money. That's the leverage. Now let's find where yours is leaking.
+
+## The 6 things actually causing it
+
+Ranked by how often they're the *real* problem on a small-business site — not by which is easiest to write a plugin for.
+
+### 1. Your hero image is a 4MB monster
+
+This is cause number one for most small-business sites, and it's not close.
+
+Images routinely make up **50–80% of a page's total weight** ([Cloudinary](https://cloudinary.com/guides/web-performance/website-speed-5-reasons-your-site-is-slow-and-how-to-fix-it)). And the single worst offender is the big beautiful hero photo at the top — the one your designer exported straight out of the camera roll at 4,000 pixels wide and 3–5MB. The visitor sees a 1,200px-wide slot. You shipped them four times the image for zero visible benefit, and it's the *first* thing that has to load, which means it's usually your LCP.
+
+A hero that looks identical at 150–250KB is dragging in at 3MB+. That's the difference between "appears instantly" and "fades in while you wait."
+
+### 2. You're on cheap shared hosting (and your TTFB proves it)
+
+Before a single pixel can paint, your server has to answer the phone. That delay is **TTFB — Time To First Byte** — and on bargain-bin shared hosting it's frequently the silent killer.
+
+Good TTFB is under ~200ms; anything **over 600ms is a server problem**, not a you problem ([FatLab](https://fatlabwebsupport.com/blog/website-optimization/wordpress-ttfb/)). When you're on a $4/month plan sharing a machine with 2,000 other sites, you're waiting in line behind all of them. No image optimization fixes a slow front door.
+
+### 3. Render-blocking JavaScript and plugin bloat
+
+Every plugin you install is a guest who brought their own luggage. Many of them insist on loading their scripts *before* the browser is allowed to show the page — "render-blocking" — so the visitor stares at white space while code they'll never notice finishes parsing ([DebugBear](https://www.debugbear.com/blog/fix-slow-loading-websites)).
+
+The WordPress site with 31 active plugins isn't slow because of one villain. It's slow because of thirty small taxes stacked on top of each other.
+
+### 4. No caching, no CDN
+
+If your server rebuilds the entire page from scratch for every single visitor, and serves it from one physical location, you're doing maximum work for minimum reason.
+
+Caching means the page is built once and handed out ready-made. A CDN means it's handed out from a server near the *visitor* instead of one in a data center two time zones away ([SiteGrade](https://sitegrade.io/en/blog/why-website-slow/)). Skipping both is like cooking every order from raw ingredients and only having one kitchen for the whole country.
+
+### 5. Death by a thousand third-party scripts
+
+The live-chat widget. The Facebook pixel. Google Analytics. A second analytics tool because someone read a blog post. A cookie banner. A review badge. A font script.
+
+Each one phones home to someone else's server, and each one is a request you don't control and can't speed up ([SiteGrade](https://sitegrade.io/en/blog/why-website-slow/)). The chat bubble that "just sits in the corner" is often a heavier load than your entire actual content. None of them feel like much. Together they're a committee.
+
+### 6. Layout shift — the page that won't hold still
+
+This is the one that doesn't make the page *slow* exactly, but makes it feel cheap and broken.
+
+The text loads. You start reading. Then a font swaps in and everything reflows. Then an image finally arrives and shoves the paragraph down. Then an ad slot pops in and you tap a link you never meant to tap. That's **CLS**, and it usually comes from images and ads without reserved space, plus fonts that load late ([web.dev](https://web.dev/articles/defining-core-web-vitals-thresholds) / [Google Search Central](https://developers.google.com/search/docs/appearance/core-web-vitals)).
+
+A site that visibly jumps while loading reads as untrustworthy even when it's technically quick. Stillness is a feature.
+
+## What you can fix this afternoon vs. what needs a real fix
+
+Here's the honest triage, because most "speed up your site" posts pretend everything is a five-minute job. It isn't.
+
+**You can probably do this yourself today:**
+
+- **#1 (images)** — resize and compress that hero. Export at the actual display size, run it through a free optimizer, switch to WebP or AVIF. Biggest single win, lowest effort.
+- **#4 (caching/CDN)** — a caching plugin plus a free CDN tier covers most small sites in an afternoon.
+- **#5 (third-party scripts)** — audit your widgets. Kill the second analytics tool. Ask whether the chat bubble earns its weight. Pure subtraction.
+
+**These usually need a real fix:**
+
+- **#2 (hosting/TTFB)** — migrating hosts is not a plugin. It's the right move surprisingly often, and it's the one people avoid longest.
+- **#3 (render-blocking JS)** — untangling which scripts block rendering, deferring them safely without breaking the site, is genuinely fiddly.
+- **#6 (layout shift)** — fixing CLS properly means reserving space in the markup and controlling font loading. That's a build-level concern, not a toggle.
+
+## The payoff
+
+A fast website is not a plugin you forgot to install. It's a series of decisions — about your images, your host, your scripts, and how the thing was built in the first place.
+
+So run the easy wins. Shrink the hero. Add caching. Fire the scripts you don't need. If your site *feels* fine after that, congratulations, you were three quick fixes away the whole time.
+
+But if you've done all of it and the thing still wades through mud — if your real-visitor numbers stay red while your lab score stays smug and green — then the bottleneck isn't a setting. It's structural. It's how the site was built.
+
+That's the kind of rebuild we do at Ctrl Alt Orion: conversion-focused sites that are fast for the 75th percentile, not just for the demo. If you've squeezed every easy win and your site still drags, the problem isn't the plugin you're missing — it's the foundation.
+
+Stop trusting the score. Start trusting the feeling. The feeling is measuring your customers.
+
+---
+
+## Sources
+
+- [web.dev — How the Core Web Vitals thresholds were defined](https://web.dev/articles/defining-core-web-vitals-thresholds) — the 75th-percentile (p75) real-user rule; the spine of this piece.
+- [Google Search Central — Understanding Core Web Vitals and Google Search](https://developers.google.com/search/docs/appearance/core-web-vitals) — LCP/INP/CLS definitions and thresholds; confirmation CWV is a ranking signal.
+- [corewebvitals.io — What Are the Core Web Vitals](https://www.corewebvitals.io/core-web-vitals) — plain-English restatement of the three metrics.
+- [Cloudinary — Website Speed: 5 Reasons Your Site Is Slow](https://cloudinary.com/guides/web-performance/website-speed-5-reasons-your-site-is-slow-and-how-to-fix-it) — images = 50–80% of page weight (cause #1).
+- [FatLab — WordPress TTFB: The Speed Metric That Actually Matters](https://fatlabwebsupport.com/blog/website-optimization/wordpress-ttfb/) — TTFB bands; good < 200ms, problem > 600ms.
+- [DebugBear — How To Fix A Slow Website](https://www.debugbear.com/blog/fix-slow-loading-websites) — render-blocking JavaScript and real diagnosis.
+- [SiteGrade — Website Slow? Causes & Fixes](https://sitegrade.io/en/blog/why-website-slow/) — hosting, caching, CDN, third-party scripts.
+- [Envisage Digital — Website Load Time Statistics](https://www.envisagedigital.co.uk/website-load-time-statistics/) — aggregated bounce/abandonment figures *(classic Google/SOASTA-era data, widely repeated)*.
+- [Edmonds Commerce — Page Load Time Impact](https://edmondscommerce.co.uk/research/performance/load-time-impact/) — load time tied to revenue.
+- HubSpot web-performance conversion figure *(~7% per second; widely cited)*.
+- 2025 Web Almanac mobile/desktop CWV pass rates *(~half the web fails; see httparchive.org)*.
+
+*Image credits: hero and waterfall diagrams are original graphics (no attribution required). Loading spinner: Ahm masum / Wikimedia Commons, CC BY-SA 4.0.*
