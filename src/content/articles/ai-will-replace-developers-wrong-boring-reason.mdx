@@ -1,0 +1,109 @@
+---
+title: "Every \"AI Will Replace Developers\" Take Is Wrong for the Same Boring Reason"
+description: "The hype takes and the doomer takes fail for one identical reason: writing code was never the bottleneck. Here's the RCT and the 49,000-developer survey that settle it."
+pubDate: 2026-06-23
+tags: ["ai", "software development", "developer jobs", "ai coding tools", "future of work"]
+image: "/articles/developer-at-work-cc.jpg"
+---
+{/* [PHOTO: original chart — devs predicted +24% faster from AI; actually 19% slower; still believed it sped them up. METR RCT. Build as an original graphic before publish.] */}
+*The single most important chart in this debate, recreated from the METR study. [PHOTO: original "perception gap" bar chart — predicted +24% faster vs. measured −19% slower vs. believed +20% faster.]*
+
+In March 2025, the CEO of Anthropic — a company whose entire business is selling AI — said he expected AI to be writing **90% of all code within three to six months**, and essentially *all* of it within a year.
+
+It is now well past that window. The code is not writing itself. Anthropic's own people can't even agree on what fraction of *their* code is AI-written, because the metric falls apart the second you ask whether throwaway scripts count ([IT Pro](https://www.itpro.com/technology/artificial-intelligence/anthropic-ceo-dario-amodei-ai-generated-code); [LessWrong](https://www.lesswrong.com/posts/prSnGGAgfWtZexYLp/is-90-of-code-at-anthropic-being-written-by-ais)).
+
+I'm not picking on one prediction. I'm picking on an entire genre. Every breathless "developers are obsolete" take and every "learn to code is dead" LinkedIn sermon fails for the exact same reason — and it's a boring one. So boring that the people making millions on the hype have a strong incentive to never say it out loud.
+
+Here it is:
+
+## Writing code was never the bottleneck
+
+Ask anyone who's actually shipped software for a living what the hard part is. It is not typing the code. It never was.
+
+The hard part is figuring out **what to build**. Pinning down what the client actually meant versus what they said. Specifying the behavior precisely enough that it can't be misinterpreted. And then — the big one — **verifying that the thing you built is actually correct**, that it handles the edge case nobody mentioned, that it won't quietly corrupt the database at 2 a.m. on a Sunday.
+
+Typing was always the fast part. A competent developer spends a small fraction of their day actually writing new code. The rest is reading, understanding, deciding, testing, and fixing.
+
+So an AI that's brilliant at the typing and shaky at the *being correct* hasn't replaced the developer. It's automated the part that was already easy and left the hard part exactly where it was. Worse — and this is the twist — it can make the hard part *harder*.
+
+## The receipt nobody on the hype side wants to see
+
+Here's where it stops being my opinion and starts being a randomized controlled trial.
+
+In 2025, METR ran an actual RCT — not a survey, not a vibe, a controlled experiment. They took 16 experienced open-source developers, working in mature codebases they averaged five years on, and gave them 246 real tasks. Each task was randomly assigned: AI tools allowed, or not. When allowed, the devs used the good stuff — Cursor Pro, Claude 3.5 and 3.7 ([METR](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)).
+
+The result: allowing AI made them **19% slower**.
+
+Now read the part that should be tattooed on the inside of every CTO's eyelids. Before the study, those developers predicted AI would make them **24% faster**. After the study — after being measurably *slowed down* — they still estimated it had made them about **20% faster**.
+
+They were slower. And they could not feel it. They walked out of an experiment that just demonstrated AI hurt their speed, convinced it had helped.
+
+That gap — between how productive AI *feels* and how productive it actually *is* — is the whole ballgame. It's why the hype is so sticky and so wrong at the same time.
+
+## The tell hiding in plain sight
+
+If AI were quietly replacing developers, you'd expect the developers using it most to trust it most. The opposite is happening.
+
+Stack Overflow's 2025 survey of tens of thousands of developers found adoption climbing to about **84%** — up from 76% the year before. Everyone's using it. But trust *fell*. Only around **29–33%** say they trust the accuracy of what AI produces; roughly **46%** actively distrust it; a rounding-error **3%** "highly trust" it ([Stack Overflow](https://survey.stackoverflow.co/2025/ai/)).
+
+Adoption up, trust down, at the same time. That's not the signature of a technology replacing people. That's the signature of a tool people are *required* to babysit.
+
+![A developer working at a computer.](/articles/developer-at-work-cc.jpg)
+*The job isn't going away — it's changing shape. Developer at work: Duckung / Wikimedia Commons, [CC BY-SA 3.0](https://commons.wikimedia.org/wiki/File:Software_developer.jpg).*
+
+And the single biggest frustration developers reported? **66%** named "AI solutions that are almost right, but not quite." The second biggest: debugging AI-generated code eats more time, not less ([Stack Overflow](https://stackoverflow.blog/2025/12/29/developers-remain-willing-but-reluctant-to-use-ai-the-2025-developer-survey-results-are-here/)).
+
+"Almost right, but not quite" is not a small problem. It's *the* problem.
+
+## Why "almost right" is worse than wrong
+
+Code that is obviously broken is cheap — it fails loudly, you fix it, you move on. Code that is *almost* right is the expensive kind. It looks correct. It passes the quick glance. It compiles, it runs, it demos beautifully. And then it does something subtly, catastrophically wrong in the one scenario you didn't think to check.
+
+Finding that requires the most expensive cognitive work there is: deeply understanding what the code is *supposed* to do and confirming it actually does it. AI doesn't remove that work. By generating plausible-looking code faster than any human could, it generates *more surface area to verify*. It shifts your day from writing — the easy part — to reviewing — the hard part.
+
+That is precisely why experienced developers got slower in a controlled trial while feeling faster. They traded an hour of writing for ninety minutes of "wait, is this actually right?" — and the writing felt like progress while the verifying felt like their normal job.
+
+It's also why the most experienced developers in that survey were the *most* skeptical of AI, not the least: 20% of them "highly distrust" it. The people with the most accountability trust it the least, because they're the ones who'll be paged when the almost-right code goes wrong.
+
+## The jobs panic, defused with arithmetic
+
+"Okay," says the doomer, "but fewer hours per feature means fewer developers needed."
+
+Two problems with that.
+
+First, the U.S. Bureau of Labor Statistics projects software-developer employment to grow on the order of **15%** over the decade — several times faster than the average job — with well over a hundred thousand openings a year [VERIFY exact figure at publish] ([BLS](https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm)). That's the official projection from the people whose entire job is projecting jobs, made with full knowledge that AI exists.
+
+Second, and more fundamentally: when something gets cheaper to produce, we usually consume *more* of it, not less. It's a basic economic pattern — make a resource cheaper and demand for it expands to fill the new headroom. If AI genuinely makes building software cheaper, the result isn't "the same amount of software with fewer people." It's *vastly more software* — every small business that couldn't afford custom tools suddenly can — and a *rising* need for people who can specify, judge, and verify all of it.
+
+The bottleneck doesn't disappear. It moves up the stack, from typing to thinking. And thinking is the part that was always the actual job.
+
+## So what *does* happen to the developer?
+
+I'm not going to pretend nothing changes, because that's the doomer's mirror-image lie. Plenty changes.
+
+The job shifts from writing code to *directing and verifying* it. Less time at the keyboard producing lines, more time deciding what should exist and confirming what got produced is sound. The developers who thrive will be the ones who were always more "engineer" than "typist" — strong on judgment, architecture, and knowing what correct looks like.
+
+The honest risk is at the bottom of the ladder. If AI handles the simple tasks juniors used to cut their teeth on, the path from beginner to expert gets murkier, and that's a real problem the industry hasn't solved. But "the on-ramp is changing" is a wildly different claim from "the profession is over." Anyone selling you the second one is selling something.
+
+## The payoff
+
+AI is the fastest, most confident, most tireless intern you've ever had — one who produces beautiful work that is occasionally, invisibly wrong, and who cannot tell the difference. You would not fire your entire engineering team and hand the company to that intern. You'd put your best people *over* it.
+
+That's the whole story. The hype takes and the doom takes both assume the bottleneck was writing code. It wasn't. It was knowing what to build and proving it works — and that's gotten *more* valuable, not less.
+
+We build software for small businesses at Ctrl Alt Orion, and we use these tools every single day. They make us faster at the easy part. The reason clients pay us is the hard part — the judgment to know what to build and the discipline to make sure it actually works. {/* soft funnel → CAO software/services */} That part isn't getting automated. It's getting more important.
+
+The robots aren't coming for the developers. They're coming for the typing. Those were never the same job.
+
+---
+
+## Sources
+
+- [IT Pro — Anthropic CEO Dario Amodei's AI-code prediction nowhere near reality](https://www.itpro.com/technology/artificial-intelligence/anthropic-ceo-dario-amodei-ai-generated-code) — the "90% of code in 3–6 months" prediction and its missed deadline.
+- [LessWrong — Is 90% of code at Anthropic being written by AIs?](https://www.lesswrong.com/posts/prSnGGAgfWtZexYLp/is-90-of-code-at-anthropic-being-written-by-ais) — why the "% of code written by AI" metric is undefined.
+- [METR — Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) ([paper](https://arxiv.org/abs/2507.09089)) — the RCT: AI made experienced devs 19% slower; the perception gap.
+- [Stack Overflow 2025 Developer Survey — AI](https://survey.stackoverflow.co/2025/ai/) — 84% adoption, ~29% trust, 66% frustrated by "almost right" code, experienced devs most skeptical.
+- [Stack Overflow blog — Developers remain willing but reluctant to use AI](https://stackoverflow.blog/2025/12/29/developers-remain-willing-but-reluctant-to-use-ai-the-2025-developer-survey-results-are-here/) — the adoption-vs-trust paradox.
+- [U.S. Bureau of Labor Statistics — Software Developers (Occupational Outlook Handbook)](https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm) — projected ~15% employment growth *(exact figure flagged [VERIFY] at publish)*.
+
+*Economic framing (cheaper production → higher demand) is presented as a well-known idea, not a sourced statistic. Image credits: perception-gap chart is an original recreation of METR data; developer photo — Duckung / Wikimedia Commons, CC BY-SA 3.0.*
