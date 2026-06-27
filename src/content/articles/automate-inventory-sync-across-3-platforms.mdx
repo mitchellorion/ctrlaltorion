@@ -1,0 +1,75 @@
+---
+title: "How to Automate Your Inventory Sync Across 3 Platforms"
+description: "Selling on eBay, Amazon and Facebook means one shelf feeding three doors — and syncing it by hand is where overselling lives. Here's the real automation ladder, what each rung costs, and the exact point it's cheaper to own the sync than to rent it."
+pubDate: 2026-06-27
+tags: ["inventory sync", "multi-channel selling", "ecommerce automation", "ebay", "amazon", "facebook marketplace", "small business"]
+image: "/articles/inventory-sync-warehouse-hero-cc.jpg"
+---
+![Interior of a warehouse with racked stock.](/articles/inventory-sync-warehouse-hero-cc.jpg)
+*One shelf. Three storefronts read from it. Automation is just making sure all three find out the instant a number changes. Warehouse interior: Андрей Романенко / Wikimedia Commons, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Interior_of_a_warehouse_in_Riga.jpg).*
+
+In [the last piece](/articles/what-multi-channel-selling-actually-means-ebay-amazon-facebook) I made the case that multi-channel selling isn't a listing problem — it's an inventory problem. One physical shelf, several storefronts, and a 17-minute gap where the same jacket sells twice and your Amazon account health takes the hit.
+
+This is the sequel: how you actually close that gap. And the honest answer is *not* "buy this tool." It's a ladder, and the only real skill is knowing which rung you're on.
+
+## What "sync" actually requires
+
+Strip away the marketing and automated inventory sync is two things:
+
+1. **A source of truth** — one place that holds the real count for every item ([Feedonomics](https://feedonomics.com/blog/inventory-sync/)).
+2. **A trigger that fans out** — when that number changes anywhere, every channel hears about it *fast*.
+
+The word doing the heavy lifting is *fast*. There are two ways to fan out a change, and the difference matters more than which brand you buy:
+
+- **Polling** — software checks each channel every X minutes and reconciles. Simple, but your overselling gap is exactly X minutes wide.
+- **Webhooks / event-driven** — the sale *itself* fires an event the instant it happens, and the count decrements everywhere immediately ([OneCart](https://www.getonecart.com/best-multichannel-inventory-management-software/)). The gap effectively closes.
+
+If you remember one technical thing from this article: **prefer event-driven over polling.** A five-minute polling window is a five-minute window to oversell.
+
+## The automation ladder
+
+You climb this as volume forces you — not because a blog told you to. Each rung is the right answer for *somebody*; the mistake is standing on the wrong one.
+
+### Rung 1 — Native marketplace integrations
+The built-in connectors (your store platform's "connect to eBay/Amazon" buttons). Cheap or free, fine for two channels, and they fail in one predictable way: **some channels don't expose the right API**, so the sync has holes ([Mortar](https://usemortar.com/blog/multi-channel-inventory-sync)). Great starting rung. Don't trust it with stock you can't afford to oversell.
+
+### Rung 2 — iPaaS glue (Zapier / Make)
+You wire the channels together yourself with automation tools. Flexible, cheap (low tens of dollars a month), and genuinely useful at low volume. The catch: it's **fragile at scale** — every edge case (a refund, a bundle, a partial cancel) is a new "zap" you have to build and babysit, and silent failures hide until you oversell. This rung is duct tape. Good duct tape, but duct tape.
+
+### Rung 3 — Dedicated sync tools
+Purpose-built platforms — **Trunk**, **Cin7**, **Descartes/Sellercloud**. These do the real thing: manually adjust stock on one channel, take an order on another, refund on a third, and they reconcile all of it ([Trunk](https://www.trunkinventory.com/)). They're also priced like infrastructure — roughly **$349/mo for Cin7 Core**, and **$499–$2,050+/mo** for enterprise tiers like Descartes ([Descartes](https://www.descartes.com/solutions/ecommerce-shipping-fulfillment/inventory-management)). {/* [VERIFY] pricing at publish */} Worth every dollar *if your business looks like their template.*
+
+### Rung 4 — A custom build
+You own the sync logic. This is the rung nobody on a SaaS blog will recommend, because they're selling Rung 3. It's the right answer when your workflow **doesn't fit a template** — made-to-order items, bundles that draw down multiple SKUs, a retail counter and a warehouse pulling from the same pool, a channel the off-the-shelf tools don't support. At that point you're paying a monthly tool to *almost* fit, plus the labor to paper over the gap. Own it instead.
+
+## How to pick your rung
+
+Three questions, in order:
+
+1. **Volume.** A dozen orders a week? Rung 1 or 2. Hundreds a day? You need Rung 3 or 4, full stop.
+2. **Workflow weirdness.** The stranger your stock behaves (bundles, kits, multi-location, made-to-order), the faster templates break and the sooner Rung 4 pays off.
+3. **Tolerance for someone else's assumptions.** Every rented tool encodes opinions about how your business *should* work. The more those opinions fight you, the more owning the logic is worth.
+
+## The honest cost math
+
+Here's the calculation the tool vendors won't run for you. A dedicated platform at **$349/mo is ~$4,200/year.** That's cheap if it saves you ten hours a month of manual reconciliation and one oversell-driven account suspension. It's *expensive* if you're paying it to handle three channels it half-supports while you still babysit the fourth by hand.
+
+The break-even isn't "tool vs. no tool." It's **"rent that almost fits vs. own that actually fits."** When the monthly rent on a tool you're fighting starts to rival the one-time cost of a build that does exactly what you need — stop renting.
+
+## Where we come in
+
+This is the un-glamorous work we do at Ctrl Alt Orion: a custom inventory-sync layer wired to *your* actual channels and *your* actual fulfillment — one source of truth, event-driven, no template fighting your business. And when a custom build is overkill, we'll tell you that too and right-size you onto the cheapest rung that won't let you oversell. Either way you end up with the thing the gap-closing requires: a single honest count, everywhere, instantly.
+
+Start on the lowest rung that won't burn you. Climb when volume — not a vendor — tells you to. And the day the rented tool stops fitting, own the sync instead of renting a worse version of it.
+
+---
+
+## Sources
+
+- [Feedonomics — Inventory Sync for Multichannel Ecommerce: How It Works](https://feedonomics.com/blog/inventory-sync/) — source-of-truth + API model.
+- [OneCart — Best Multichannel Inventory Management Software 2026](https://www.getonecart.com/best-multichannel-inventory-management-software/) — webhook/event-driven vs. polling; tool comparison.
+- [Trunk — Multi-Channel Inventory Syncing](https://www.trunkinventory.com/) — real-time reconciliation across manual edits, orders, refunds.
+- [Mortar — How to Sync Inventory Across Multiple Sales Channels](https://usemortar.com/blog/multi-channel-inventory-sync) — native-integration limits where APIs don't exist.
+- [Descartes — Multichannel Inventory Management](https://www.descartes.com/solutions/ecommerce-shipping-fulfillment/inventory-management) — enterprise pricing context.
+
+*Pricing ($349–$2,050+/mo) and the "20–35% more secondary-channel revenue" figure are vendor-sourced and current as of research (2026-06-27) — flagged [VERIFY] and to be re-checked before publish. Image: Андрей Романенко / Wikimedia Commons, CC BY-SA 4.0. A "source of truth → webhook → 3 channels" flow diagram is recommended as an original in-body asset.*
