@@ -1,0 +1,68 @@
+---
+title: "Building a Cheap Home Server for File Backups"
+description: "You don't need a data center — you need three copies of your files, on two kinds of media, with one offsite. Here's the honest cheap path to a real backup server, from a $35 Raspberry Pi to a turnkey NAS, and which tier is actually yours."
+pubDate: 2026-06-28
+tags: ["backups", "home server", "NAS", "data protection", "small business", "tutorial", "affiliate"]
+image: "/articles/cheap-home-server-hard-drive-cc.jpg"
+---
+![A silver external hard drive standing on a wooden desk.](/articles/cheap-home-server-hard-drive-cc.jpg)
+*A backup server can be exactly this unglamorous: a drive that isn't your main drive, somewhere that isn't your main computer. External drive photo: とある白い猫 / Wikimedia Commons, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:1TB_LaCie_external_hard_drive.jpg).*
+
+*Disclosure: some links below are Amazon affiliate links (tag `ctrlaltorion-20`). Costs you nothing; the picks don't change.*
+
+Everyone agrees backups matter and almost nobody has real ones. The reason is that "set up a backup system" sounds like a weekend project with a learning curve, so it stays on the someday list right up until the morning a drive dies and takes the customer database with it.
+
+So let's make it small. You don't need to understand servers. You need one rule and a box of parts.
+
+## The only rule: 3-2-1
+
+This is the whole theory, and it's worth memorizing because every product in this space is just a way of satisfying it:
+
+- **3** copies of anything you can't afford to lose.
+- **2** different kinds of media (so the same failure can't take both).
+- **1** copy **offsite** (so a fire, flood, or theft can't take the building and your backups at once).
+
+Your laptop's working file is copy one. The home backup server we're about to build is copies two and three on real media. The offsite copy is a cloud sync running quietly on top. Miss the offsite piece and you don't have a backup system — you have two drives in one room waiting for the same disaster. {/* [VERIFY] 3-2-1 is the standard cited by US-CERT/CISA and most backup vendors */}
+
+## Pick your tier honestly
+
+There are three real ways to build the on-site box, and the right one depends entirely on how much fiddling you enjoy. Don't let a Reddit thread shame you up a tier.
+
+### Tier 1 — "I just want it done": a turnkey NAS
+A two-bay network-attached-storage box like a **[Synology DiskStation DS224+](https://www.amazon.com/dp/B0CRV5JLCG?tag=ctrlaltorion-20)** {/* [VERIFY ASIN+price ~$300 + drives] */} plus two NAS-rated drives is the path of least resistance. You put two drives in, mirror them (RAID 1, so one drive can die without data loss), install the built-in backup app, and point your computers at it. It costs the most up front and saves you the most weekends. For most small-business owners, this is the correct answer and the rest of the article is for fun.
+
+A note on RAID, because people get this wrong: **a mirror is not a backup.** RAID protects you from a *drive* failing. It does nothing about a deleted file, ransomware, or a power surge frying both drives — all of which are faithfully mirrored to the second disk instantly. RAID is uptime. Backup is the offsite copy. You want both.
+
+### Tier 2 — "I have an old PC and a Saturday": repurpose it
+That laptop or desktop you replaced is a perfectly good backup server. Wipe it, install a free server OS — **TrueNAS** if you want the polished storage appliance experience, or plain Ubuntu if you're comfortable in a terminal — hang a couple of external drives off it, and you've spent $0 on the brain and only bought storage. This is the best value on the list if you already own the corpse of a working computer.
+
+### Tier 3 — "I want it tiny and cheap": a Raspberry Pi
+A **[Raspberry Pi 5](https://www.amazon.com/dp/B0CK2FCG1K?tag=ctrlaltorion-20)** {/* [VERIFY ASIN+price ~$80 kit] */} with a USB drive attached is a $100-ish always-on backup target that sips power and fits in your hand. It's the hobbyist's choice — a little more setup, a little more "why won't this mount," but genuinely capable and a great way to learn what's happening under the turnkey boxes. If you find the build fun, you'll love it. If "edit the fstab file" made you tense, go back to Tier 1.
+
+## The storage, whichever tier you pick
+
+You need drives, and you need to not cheap out on the wrong axis:
+
+- For the backup target, buy **NAS-rated or external desktop drives**, not the cheapest bare drive — something like a **[WD Elements / Easystore external](https://www.amazon.com/dp/B07VFML2BR?tag=ctrlaltorion-20)** {/* [VERIFY ASIN+price] */} for an external setup, or WD Red / Seagate IronWolf if they're going inside a NAS. They're built for the always-on duty cycle a backup drive lives.
+- **Buy more capacity than you need today.** Backups grow. A drive that's 90% full the day you set it up is a project you'll be redoing in six months.
+
+## Wire up the offsite copy (don't skip this)
+
+The on-site box handles "drive died." The offsite copy handles "the building is gone." Two clean options:
+
+1. **A cloud sync of the important folders** — Backblaze, a cloud-drive plan, whatever you already pay for. Cheap, automatic, and the single highest-leverage thing in this entire article. Encrypt before it leaves if the data is sensitive.
+2. **A rotating drive you take elsewhere** — a second external you sync weekly and physically keep at another location. Free if you already have the drive; only as reliable as your discipline.
+
+Either satisfies the "1" in 3-2-1. Both is better.
+
+## Automate it, then forget it
+
+A backup you have to remember to run is a backup you will eventually forget to run. Whatever tier you chose, set the copy job on a **schedule** — the NAS apps do this for you; on Linux it's a `cron` job running `rsync` or `restic`. The goal is that the system backs itself up nightly while you sleep and only ever speaks to you when something's wrong.
+
+And put the whole thing on a **[battery backup](https://www.amazon.com/dp/B00429N19W?tag=ctrlaltorion-20)** {/* [VERIFY ASIN+price ~$220] */} — same UPS we recommended in [yesterday's desk-gear piece](/articles/desk-gear-that-earns-its-place). A backup server that loses power mid-write during an outage can corrupt the very thing it's protecting. Clean shutdowns matter most for the machine whose entire job is reliability.
+
+## The honest bottom line
+
+The cheapest functional version of this is: your old PC, two external drives, a free OS, a nightly `rsync`, and a Backblaze subscription. That's a real 3-2-1 system for the price of the drives. The turnkey version is a Synology and twenty minutes. Both beat the system you're running right now, which — be honest — is one drive and a prayer.
+
+If your business data lives in a tangle of spreadsheets, app exports, and platform accounts and you're not even sure what a complete backup *would* include, that's a different problem than hardware — it's that nobody's mapped where your business actually keeps its memory. That mapping, and the automated pipeline that keeps the important data flowing somewhere safe, is the kind of thing [we set up for clients](/contact). The drive is easy. Knowing what's worth protecting is the part worth getting right.
