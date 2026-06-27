@@ -1,0 +1,4 @@
+# Cloudflare Pages redirects
+# Alias the conventional sitemap filename to the one Astro actually generates,
+# so tools/Search Console submissions for /sitemap.xml resolve to the real sitemap.
+/sitemap.xml  /sitemap-index.xml  301
