@@ -1,0 +1,69 @@
+---
+title: "Core Web Vitals Explained for People Who Don't Code"
+description: "Google grades every website on three things: how fast the main content loads, how quickly it reacts when you tap, and whether stuff jumps around as it loads. Here's what LCP, INP and CLS actually mean — in plain English — and what you can fix yourself."
+pubDate: 2026-07-01
+tags: ["core web vitals", "SEO", "performance", "web", "small business", "google"]
+image: "/articles/core-web-vitals-speed-gauge-cc.jpg"
+---
+![A car's digital dashboard speedometer reading zero.](/articles/core-web-vitals-speed-gauge-cc.jpg)
+*Core Web Vitals are Google's dashboard for your website — three gauges measuring whether it feels fast and stable to a real person. Speedometer photo: Jacapa090 / Wikimedia Commons, [public domain](https://commons.wikimedia.org/wiki/File:%22_14_-_ITALY_-_500_Abarth_TFT_-_Speedometers_dashboards_driving_stand_cockpits_Automobile_gauges.JPG).*
+
+"Core Web Vitals" sounds like something only a developer should care about. It isn't. It's Google's report card for how your website *feels* to a real human, and it feeds into how you rank in search. You don't need to code to understand it — you need to understand what three numbers mean, which ones you can fix yourself, and which ones to hand to someone who builds sites.
+
+There are exactly three Core Web Vitals. That's it. Here's each one in plain English.
+
+## 1. LCP — does the main thing load fast?
+
+**LCP (Largest Contentful Paint)** measures how long it takes for the biggest, most important thing on the screen — usually your hero image or headline — to actually appear. It's the answer to "how long until the visitor sees the point of this page?"
+
+- **Good: under 2.5 seconds.** Needs work: 2.5–4s. Poor: over 4s. {/* [VERIFY] thresholds per Google/web.dev at publish */}
+
+What blows it up, in order of how often I see it: **huge unoptimized images** (a 5MB photo where a 200KB one would look identical), slow hosting, and too much code loading before the content. The image one is the big lever, and it's one you can often fix without a developer — which is exactly why I wrote a whole piece on [why your site feels slow and the real causes](/articles/why-your-small-business-website-feels-slow).
+
+## 2. INP — does it react when you tap?
+
+**INP (Interaction to Next Paint)** measures responsiveness: when someone taps a button or a menu, how long before the page visibly responds? It's the lag between "I tapped" and "something happened." A laggy, unresponsive-feeling site is usually failing INP.
+
+- **Good: under 200 milliseconds.** Needs work: 200–500ms. Poor: over 500ms. {/* [VERIFY] thresholds at publish */}
+
+One thing worth knowing because you'll see it in old articles: INP **replaced** the older metric called **FID (First Input Delay)** as an official Core Web Vital in March 2024. {/* [VERIFY] date at publish */} If a guide is still talking about FID, it's out of date. INP is the one Google measures now, and it's stricter, because it watches *every* interaction, not just the first.
+
+INP problems are almost always caused by heavy JavaScript — too many scripts, bloated plugins, marketing tags piling up. This is the most "hand it to a developer" of the three, because the fix is usually trimming or deferring code.
+
+## 3. CLS — does stuff jump around as it loads?
+
+**CLS (Cumulative Layout Shift)** measures visual stability: how much the page jumps and shifts while it's loading. You know the feeling — you go to tap a link and an ad or image loads above it, everything jumps down, and you tap the wrong thing. That infuriating jump *is* CLS, measured.
+
+- **Good: under 0.1.** Needs work: 0.1–0.25. Poor: over 0.25. {/* [VERIFY] thresholds at publish */}
+
+The usual culprits are **images and ads without reserved space** (the browser doesn't know how big they'll be, so everything reflows when they arrive) and **fonts that swap** and reshuffle the text. The fix — telling the browser each element's size up front — is simple for a developer and nearly invisible to everyone else, but the *effect* on how cheap and broken a site feels is huge.
+
+## Why you should care (it's not just ranking)
+
+Yes, Core Web Vitals are a Google ranking factor — a real one, especially on mobile. But the ranking is almost beside the point. These three numbers are a remarkably honest measure of whether your site *feels* good: fast to show up, quick to respond, stable to use. A site that passes all three feels professional. A site that fails them feels cheap, even if it's beautiful in a screenshot. Your visitors feel the difference whether or not they could name it.
+
+## How to check yours (free, no code)
+
+Two free tools, two minutes:
+
+1. **Google PageSpeed Insights** — paste your URL in, get all three scores plus specific suggestions. {/* [VERIFY] tool name/URL at publish */}
+2. **Google Search Console** — if your site is connected, its Core Web Vitals report shows how your *real visitors* are experiencing the site over time, which matters more than a single lab test.
+
+Run your homepage and your most important page. You'll get a color-coded card — green, amber, red — for each metric.
+
+## What you can fix vs. what to hand off
+
+Here's the honest division of labor:
+
+**You can often handle:**
+- **Oversized images** — resize and compress before uploading. Single biggest LCP win, and frequently doable in your site editor or a free tool.
+- **Removing junk** — that plugin you stopped using, the three analytics tags you forgot you added. Less code, better INP.
+
+**Hand to a developer:**
+- **Reserving space for images/ads** to kill layout shift (CLS).
+- **Trimming and deferring JavaScript** for responsiveness (INP).
+- **Hosting and delivery** improvements for load time (LCP).
+
+Don't let anyone make this sound mystical. It's three questions — *does it show up fast, react fast, and hold still?* — and a couple of free tools that tell you the answer in plain colors.
+
+If you run yours and it's a wall of red, that's not a verdict on your business; it's a fixable, well-understood set of problems, and the wins are usually concentrated in a few changes. That's [exactly the kind of work we do](/contact) — taking a site from red to green across all three, so it ranks better *and* stops feeling cheap to the people you're trying to win over. The metrics are just Google's way of measuring something your customers already feel.
