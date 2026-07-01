@@ -1,0 +1,95 @@
+---
+title: "DIY Employee Scheduling in Google Sheets — The Full Build"
+description: "You don't need a $4/employee/month scheduling app to run a stable weekly rota. Here's the complete Google Sheets build — validation, auto-calculated hours and labor cost, overtime flags — plus the exact point it stops being enough."
+pubDate: 2026-06-30
+tags: ["scheduling", "google sheets", "small business", "operations", "tutorial", "staff management"]
+image: "/articles/diy-scheduling-cafe-staff-cc.jpg"
+---
+![Staff working behind the counter of a small café during a busy morning.](/articles/diy-scheduling-cafe-staff-cc.jpg)
+*These are the people the schedule is about. For a small, stable team, you can run the whole rota out of a spreadsheet — until you can't. Café photo: PattayaPatrol / Wikimedia Commons, [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:DFC_3995_Busy_morning_at_a_cozy_street-side_caf%C3%A9_-_patrons_chat_while_staff_prepare_fresh_orders_behind_the_counter.jpg).*
+
+Scheduling software wants $3–5 per employee per month to solve a problem you can solve for free this afternoon. For a small team with reasonably stable shifts, a well-built Google Sheet isn't a sad compromise — it's the right tool. The trick is *building it well*, so it does the calculating and the catching for you instead of being a grid you stare at and hope.
+
+This is the full build. Copy it exactly and you'll have a scheduler that validates who you enter, sums everyone's hours, totals your labor cost live, and waves a red flag before you accidentally roster someone into overtime.
+
+> Quick honesty, since [I recently argued the spreadsheet is not a business system](/articles/the-spreadsheet-is-not-a-business-system): it isn't. This build is the *good* phase of a spreadsheet's life — useful, contained, and clear about its own ceiling. I'll show you the ceiling at the end so you know exactly when to walk away from it.
+
+## Step 1 — Two tabs, not one
+
+The mistake everyone makes is doing everything on one sheet. Split it:
+
+- **`Roster`** — one row per employee. Columns: Name, Role, Pay Rate, Max Weekly Hours, and a simple Availability note.
+- **`Week`** — the actual schedule grid: employees down the side or shifts across the top, days as columns.
+
+Keeping your *people data* separate from your *schedule grid* is the single decision that makes everything below possible. The roster becomes the source of truth; the week reads from it.
+
+## Step 2 — Make the schedule pick from the roster (data validation)
+
+In the `Week` grid, you never want to *type* a name — typos break every formula that follows. Instead, select your shift cells and use **Data → Data validation → Dropdown (from a range)**, pointed at your `Roster` name column (e.g. `Roster!A2:A30`).
+
+Now every shift cell is a dropdown of real employees. No "Jhon," no "John ," no half-typed mystery. This is the validation a raw spreadsheet lacks, bolted on by hand.
+
+## Step 3 — Auto-calculate everyone's hours
+
+Give each shift a length (either a "Hours" helper column per shift, or fixed shift codes). Then, in the `Roster` tab, add an **Hours This Week** column that sums each person's scheduled time:
+
+```
+=SUMIF(Week!$B$2:$Z$100, A2, Week!$AA$2:$AA$100)
+```
+
+(Match on the name in `A2`, sum the corresponding hours range.) Adjust ranges to your layout. The point: the moment you drop a name into the grid, their weekly hours update themselves. You stop counting by hand.
+
+## Step 4 — Total your labor cost live
+
+This is the column that changes how you schedule. Next to hours, multiply by pay rate:
+
+```
+=[Hours This Week] * [Pay Rate]
+```
+
+Sum that column and you have **this week's labor cost updating in real time as you build the schedule.** Drag a shift, watch the number move. Most small businesses schedule blind and find out the cost on payday; this puts the price tag on every decision while you're still making it.
+
+## Step 5 — Flag overtime before it happens
+
+Select your **Hours This Week** column → **Format → Conditional formatting** → "Greater than" your overtime threshold (say 40) → fill red. {/* [VERIFY] OT threshold/rules vary by state — note this is a simple hours flag, not legal compliance */}
+
+Now anyone you've over-scheduled lights up red *as you build*, not after they've worked the hours. Same trick catches anyone scheduled below their guaranteed minimum, or past their Max Weekly Hours.
+
+## Step 6 — Coverage check
+
+At the bottom of each day column, a quick `COUNTIF` or `COUNTA` tells you how many people are on that day:
+
+```
+=COUNTA(B2:B20)
+```
+
+Set yourself a minimum-coverage number per day and eyeball it. Thin Tuesday? You'll see it before Tuesday sees you.
+
+## Step 7 — Share it without it getting wrecked
+
+Don't give the whole team edit access — that's how the grid gets resorted into chaos. Two safe options:
+
+1. **File → Share → "Anyone with the link → Viewer"** and post the read-only link.
+2. **File → Publish to web** for a clean, locked view staff can bookmark.
+
+You keep the one editable copy. They get a window, not a wrench.
+
+## When this is genuinely enough
+
+If you have a handful of people, stable shifts, and you're the only one building the schedule — **stop here.** You now have validation, live hours, live labor cost, and overtime flags. That's a real system for a real small team, and you paid nothing. Don't let anyone upsell you off it.
+
+## The ceiling (read this before you outgrow it)
+
+Here's exactly where this build runs out of road, so you're not surprised:
+
+- **No notifications.** The sheet can't text someone their shift changed. You're still the messenger.
+- **No shift swaps.** When two people want to trade, that's a phone call and a manual edit, not a request your system handles.
+- **No clock-in / actuals.** It schedules *planned* hours; it has no idea who actually showed up, so it can't reconcile to payroll.
+- **It breaks with many cooks.** The instant several managers edit at once, you're back in the version-and-overwrite mess every shared spreadsheet eventually becomes.
+- **No mobile reality.** Staff live on their phones; a spreadsheet is a miserable phone experience.
+
+Every one of those is a feature a spreadsheet structurally cannot grow. When you find yourself *working around* the sheet — group texts to announce changes, a side chat for swaps, a second tab to track who no-showed — that's not the sheet failing. That's the sheet telling you, clearly, that the job has outgrown it.
+
+That's the moment a small **purpose-built scheduling app** earns its keep: shift notifications, swap requests employees handle themselves, clock-in that feeds real hours back to payroll, and a phone-first interface your staff will actually open. Not a bloated platform — the same narrow, reliable tool the spreadsheet was, with the four things it never could do.
+
+That's [the kind of build we do](/contact): we take the scheduler you've already designed in Sheets — because you *have* designed it, every rule is already in those formulas — and turn it into something your team runs from their pockets. The spreadsheet was never wrong. It just has a ceiling, and now you know exactly where it is.
