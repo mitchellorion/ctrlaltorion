@@ -1,0 +1,111 @@
+---
+title: "Business Email That Doesn't Land in Spam"
+description: "you@gmail.com looks temporary. you@yourdomain.com still lands in spam if DNS auth is wrong. Here's the practical setup for small businesses: domain mail, SPF/DKIM/DMARC in plain English, and habits that keep you out of junk."
+pubDate: 2026-07-19
+tags: ["email", "small business", "deliverability", "domains", "professional setup"]
+image: "/articles/business-email-hero.jpg"
+---
+![A laptop on a clean desk showing a professional email inbox with blurred message list.](/articles/business-email-hero.jpg)
+*Professional email is half brand and half plumbing — and the plumbing is what puts you in the inbox. Photo: original for ctrlaltorion.*
+
+Two different problems get mashed into one complaint: "our email isn't professional" and "our email never arrives."
+
+They overlap. They're not the same.
+
+- **Professional** means the address looks like a real business.  
+- **Deliverable** means the message actually reaches a human inbox.
+
+You can have a pretty domain and still rot in spam. You can also have perfect technical auth and write like a phisher. You need both.
+
+## Step 1 — stop using a free webmail address as the brand
+
+`coolplumberguy84@gmail.com` works for texting your cousin. For invoices, quotes, and password resets, it signals "temporary."
+
+Get:
+
+1. A domain you own  
+2. Mailboxes on that domain (`hello@`, `yourname@`)  
+3. A habit of sending business mail **from** that domain
+
+This pairs with owning the rest of your presence — [not renting your whole audience from Instagram](/articles/your-instagram-is-not-a-customer-list), not leasing your site forever without a plan ([free website builder costs](/articles/real-cost-of-free-website-builder)).
+
+## Step 2 — the three acronyms that actually matter
+
+When your domain sends mail, receiving servers ask: **is this sender allowed to send as this domain?**
+
+### SPF
+A public list of servers allowed to send mail for your domain. If your marketing tool sends campaigns but isn't on the list, those campaigns look forged.
+
+### DKIM
+A cryptographic signature on the message. It proves the content wasn't altered and is tied to your domain's key.
+
+### DMARC
+A policy that says what to do when SPF/DKIM fail, and where to send reports. Even a gentle policy plus monitoring is better than nothing.
+
+You don't need to become a DNS engineer. You **do** need these records set correctly for every tool that sends as you: Google/Microsoft mail, your website form notifications, your newsletter tool, your booking system.
+
+Wrong auth is a top reason "the form works but the email vanishes" — first cousin to [silent contact-form failure](/articles/why-your-contact-form-is-silently-losing-leads).
+
+## Step 3 — one domain, fewer random senders
+
+Each new app that "sends email as your business" is another chance to misconfigure DNS or look inconsistent.
+
+Prefer:
+
+- One primary mailbox provider  
+- A short list of approved sending tools  
+- The same From name style every time (`Alex at River Dental`, not twelve variants)
+
+## Step 4 — write like a human, not a malware PDF
+
+Filters and humans both flinch at:
+
+- All-caps subject lines and free money energy  
+- Tiny URL shorteners to mystery destinations  
+- "Dear customer" with no context  
+- Attachments nobody asked for from a new domain  
+- Mismatched brands (domain A, logo B, reply-to C)
+
+For transactional mail (quotes, appointments): plain, specific, branded lightly, one clear CTA.
+
+## Step 5 — warm up and don't blast strangers
+
+A brand-new domain that suddenly sends 5,000 cold emails is telling the internet a story, and the story is "spam."
+
+For normal small-business use (replies, invoices, a modest newsletter to people who opted in), stay in the lane:
+
+- Permission-based lists only  
+- Consistent volume  
+- Real engagement (people open/reply)
+
+If you need bulk cold outreach, that's a different sport with different tools and rules — and most local service businesses don't need it as much as they need faster replies to inbound.
+
+## A practical setup checklist
+
+1. ☐ Domain registered at a registrar you control  
+2. ☐ Business mailbox live (`you@domain`)  
+3. ☐ Webmail or phone app working  
+4. ☐ SPF includes your mail host  
+5. ☐ DKIM enabled in your mail host + DNS  
+6. ☐ DMARC present (start with monitoring if you're unsure)  
+7. ☐ Website forms send from/to sensible addresses  
+8. ☐ Newsletter tool authenticated (if you use one)  
+9. ☐ Test: send to Gmail, Outlook, and a friend; check spam  
+10. ☐ Signature with real phone + site link (not 15 social icons)
+
+## How to test without guessing
+
+- Send to a personal Gmail and a personal Outlook  
+- Check whether it landed in Primary/Inbox vs Spam  
+- Use your provider's "authenticate domain" wizard until it says pass  
+- After DNS changes, wait for propagation — then retest
+
+If employees forward everything to personal Gmail "because it's easier," fix usability of the business mailbox. Workarounds become shadow IT, and shadow IT breaks auth stories.
+
+## What I'm not saying
+
+I'm not saying you need a 50-person IT department. For a five-person shop, this is an afternoon of correct setup plus occasional hygiene — not a lifestyle.
+
+I'm saying **unprofessional address + broken auth** is an invisible tax on every quote you send.
+
+If you want domain mail, DNS auth, and form notifications set up so leads and invoices stop disappearing, we can do that kind of unglamorous infrastructure at [Ctrl Alt Orion](/contact). Boring when it works. Expensive when it doesn't.
